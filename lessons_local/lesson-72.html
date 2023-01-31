@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Веб-хранилище</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <section>
+        <a href="../16_local_Storage.html"><<назад</a>
+        <h1>Веб-хранилище</h1>
+       <p>
+           Каждый раз когда вы изменяете цветовую тему между светлой и темной, просматриваете видео, добавляете товар в корзину, открываете или закрываете сайдбар, популярные веб-приложения запоминают состояние интерфейса и при следующем посещении его восстанавливают.
+<br>
+По умолчанию состояние интерфейса хранится в памяти вкладки браузера и теряется при закрытии веб-приложения. Чтобы избежать этого, необходимо где-то сохранить данные о состоянии интерфейса между посещениями страницы. На помощь приходит хранение информации о состоянии веб-приложения на компьютере пользователя.
+
+<h2>Web Storage API</h2>
+Веб-хранилище состоит из локального хранилища (localStorage) и хранилища сеансов (sessionStorage). Предоставляет способ хранения данных интуитивно понятным способом в виде пар ключ:значение. Технически в веб-хранилище можно записать только строки, но это не проблема если использовать методы класса JSON для преобразования сложных типов. В веб-хранилище не записывают методы объектов или функции, только данные.
+<br><br>
+Локальное хранилище (localStorage) уникально для каждого веб-приложения и будет одинаковым между несколькими вкладками в которых оно (веб-приложение) запущено. Данные в локальном хранилище не удаляются даже при закрытии браузера или выключении компьютера. Чтобы их удалить, необходимо использовать JavaScript.
+<br><br>
+Хранилище сеансов (sessionStorage) похоже на локальное, оно также уникально для кажого веб-приложения, но время жизни сохраненных данных огрничено сессией вкладки браузера. Как только пользователь закрывает вкладку или браузер, данные очищаются. На практике хранилище сеансов используется значительно реже.
+
+<h4>
+    ИНТЕРЕСНО
+В веб-хранилище не хранят пароли, номера банковских карт и тому подбную конфиденциальную информацию. Если вредоносный скрипт получит доступ к веб-странице, то без проблем прочитает эти данные.
+
+</h4>
+<h2>Локальное хранилище</h2>
+
+Позволяет хранить данные без истечения срока действия в формате пар ключ:значение на компьютере пользователя и читать их при повторном посещении страницы. Локальное и хранилище сессии это часть браузера, поэтому они доступны как свойства объекта window, имеют одинаковый набор свойств и методов и различаются только поведением.
+
+<ul>
+    <li>setItem(key, value) - делает новую, или обновляет уже существующую запись в хранилище.</li>
+    <li>getItem(key) - возвращает из хранилища значение с ключом key.</li>
+    <li>removeItem(key) - удаляет из хранилища запись с ключом key.</li>
+    <li>clear() - полностью очищает все записи в хранилище.</li>
+    <li>length - хранит количество записей в хранилище.</li>
+</ul>
+
+<h2>Сохранение</h2>
+
+Используя метод setItem(key, value) можно добавить новую запись в виде пары ключ:значение.
+<ul>
+    <li>localStorage.setItem("ui-theme", "light");</li>
+    <li>localStorage.setItem("sidebar", "expanded");</li>
+    <li>localStorage.setItem("notification-level", "mute");</li>
+</ul>
+
+Если необходимо сохранить что-то кроме строки, например массив или объект, необходимо преобразовать их в строку методом <code>JSON.stringify()</code>
+
+
+<code>
+    const settings = {
+<br>  theme: "dark",
+ <br> isAuthenticated: true,
+ <br> options: [1, 2, 3],
+<br>};
+
+localStorage.setItem("settings", JSON.stringify(settings));
+</code>
+
+
+
+<h2>
+    Чтение
+</h2>
+
+Метод getItem(key) позволяет прочитать из хранилища запись с ключом key. Если в хранилище нет записи с таким ключом, метод возвращает null. Когда значение это обычная строка - нет необходимости её парсить.
+
+<code>
+  localStorage.setItem("ui-theme", "dark");
+<br>
+<br> const theme = localStorage.getItem("ui-theme");
+<br>console.log(theme); // "dark"
+</code>
+
+В противном случае, необходимо распарсить значение методом <code>JSON.parse()</code> чтобы получить валидные данные.
+
+<code>
+    const settings = {
+<br>  theme: "dark",
+<br>   isAuthenticated: true,
+<br>   options: [1, 2, 3],
+<br> };
+<br> 
+<br> localStorage.setItem("settings", JSON.stringify(settings));
+<br> 
+<br> const savedSettings = localStorage.getItem("settings");
+<br> const parsedSettings = JSON.parse(savedSettings);
+<br> console.log(parsedSettings); // settings object
+
+</code>
+<h4>
+    ИНТЕРЕСНО
+Не забывайте использовать конструкцию try...catch с методом JSON.parse(), чтобы избежать «падения» скрипта если вдруг прочитали не валидный JSON.
+
+</h4>
+<h2>Удаление</h2>
+
+Метод removeItem(key) удаляет из хранилища уже существующую запись с ключом key.
+<code>
+
+localStorage.setItem("ui-theme", "dark");
+<br> console.log(localStorage.getItem("ui-theme")); // "dark"
+<br> 
+<br> localStorage.removeItem("ui-theme");
+<br> console.log(localStorage.getItem("ui-theme")); // null
+
+</code>
+<h2>
+    Очистка хранилища
+</h2>
+
+Операция полной очистки хранилища занятие опасное, так как может затронуть записи сделанные другими разработчиками проекта. Тем не менее, если вы хотите полностью очистить хранилище, вызовите метод clear().
+<code>
+localStorage.setItem("ui-theme", "light");
+<br> localStorage.setItem("sidebar", "expanded");
+<br> localStorage.setItem("notification-level", "mute");
+<br> console.log(localStorage.getItem("ui-theme")); // "light"
+<br> console.log(localStorage.getItem("sidebar")); // "expanded"
+<br> console.log(localStorage.getItem("notification-level")); // "mute"
+<br> 
+<br> localStorage.clear();
+<br> console.log(localStorage.getItem("ui-theme")); // null
+<br> console.log(localStorage.getItem("sidebar")); // null
+<br> console.log(localStorage.getItem("notification-level")); // null
+</code>
+
+<h2>
+    Сохраняем сообщение
+</h2>
+
+Создадим форму для ввода сообщения и будем сохранять его в localStorage при сабмите. Изменяйте значение текстового поля и нажимате кнопку «Save». Текст в поле вывода изменится на введенный. Перезагрузите страницу, и вы увидите все тот же текст, хотя ничего еще не вводили. При загрузке страницы мы берем из localStorage последнее сохраненное значение. Изначально такой записи в хранилище нет, поэтому будет выведена пустая строка.
+
+<br><br>
+Посмотреть содержимое веб-хранилища можно в инструментах разработчика на вкладке Application. Там же можно вручную удалять и добавлять записи. На практике это используется во время разработки и отладки работы приложения.
+<br><br>
+Application tab in Chrome dev tools
+<br>
+Сервис для localStorage
+<br>
+Для того чтобы сократить количество повторяющегося кода при работе с веб-хранилищем, можно написать сервис с стандартными методами, например save и load. Они будут абстрагировать повторяющийся код проверки ошибок парса и тому подобную рутину.
+
+<code>
+   storage.js
+ <br>const save = (key, value) => {
+  <br> try {
+  <br>   const serializedState = JSON.stringify(value);
+ <br>    localStorage.setItem(key, serializedState);
+ <br>  } catch (error) {
+ <br>    console.error("Set state error: ", error.message);
+ <br>  }
+ <br>};
+ <br>
+ <br>const load = key => {
+ <br>  try {
+ <br>    const serializedState = localStorage.getItem(key);
+ <br>    return serializedState === null ? undefined : JSON.parse(serializedState);
+ <br>  } catch (error) {
+ <br>    console.error("Get state error: ", error.message);
+ <br>  }
+ <br>};
+ <br>
+ <br>export default {
+ <br>  save,
+ <br>  load,
+ <br>};
+
+</code>
+Теперь мы можем безопасно добавлять и читать записи из локального хранилище. Попробуйте самостоятельно дописать метод remove(key) для удаления записи, аналогично load(key) и save(key, value).
+    </p>
+    </section>
+</body>
+</html>

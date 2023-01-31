@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Свойства и атрибуты</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <section>
+        <a href="../11_DOM.html"><<назад</a>
+        <h1>
+            Свойства и атрибуты
+        </h1>
+        <p>
+
+Во время построения DOM-дерева, некоторые стандартные 
+HTML-атрибуты становятся свойствами элементов.
+Посмотрим на несколько часто использующихся свойств.
+<br>
+<ul>
+    <li>value - содержит текущий текстовый контент элементов форм.</li>
+    <li>checked - хранит состояние чекбокса или радиокнопки.</li>
+    <li>name - хранит значение, указанное в HTML-атрибуте name.</li>
+    <li>src - путь к изображению тега img.</li>
+</ul>
+
+<h2>Свойство textContent</h2>
+elem.textContent возвращает текстовый контент внутри элемента. Доступно для чтения и записи. Не зависимо что будет передано в textContent, данные всегда будут записаны как текст.
+
+
+<h2>Свойство classList</h2>
+В свойстве classList хранится объект с методами для работы с классами элемента.<br>
+<ul>
+    <li>elem.classList.contains(cls) - возвращает true или false в зависимости от того, есть ли у элемента класс cls.<br>
+</li>
+    <li>elem.classList.add(cls) - добавляет класс cls в список классов элемента.<br>
+</li>
+    <li>elem.classList.remove(cls) - удаляет класс cls из списка классов элемента.<br>
+</li>
+    <li>elem.classList.toggle(cls) - если класса cls нет, то добавляет его, если есть, наоборот удаляет.<br>
+</li>
+    <li>elem.classList.replace(oldClass, newClass) - заменяет существующий класс oldClass на указанный newClass.<br>
+</li>
+</ul>
+
+<h2>Свойство style</h2>
+Используется для чтения и изменения инлайновых стилей. Возвращает объект CSSStyleDeclaration, который содержит список всех свойств, определенных только во встроенных стилях элемента, а не весь CSS. При записи свойства записываются в camelCase, то есть background-color превращается в element.style.backgroundColor и т. д.
+
+<code>const button = document.querySelector(".btn");<br>
+
+button.style.backgroundColor = "teal";<br>
+button.style.fontSize = "24px";<br>
+button.style.textAlign = "center";<br>
+
+console.log(button.style); // inline styles object<br></code>
+
+<h4>ИНТЕРЕСНО
+На практике стилизация элементов выполняется добавленим CSS-классов. Свойство style используется для добавления каких-то динамических стилей, например во время анимации.
+</h4>
+<h2>Атрибуты</h2>
+DOM-элементам соответствуют HTML-теги у которых есть текстовые атрибуты. Доступ к атрибутам осуществляется при помощи стандартных методов. Эти методы работают со значением, которое находится в HTML.<br>
+
+<ul>
+    <li>elem.hasAttribute(name) - проверяет наличие аттрибута, возвращает true или false.<br>
+</li>
+    <li>elem.getAttribute(name) - получает значение атрибута и возвращает его.<br>
+</li>
+    <li>elem.setAttribute(name, value) - устанавливает атрибут.<br>
+</li>
+    <li>elem.removeAttribute(name) - удаляет атрибут.<br>
+</li>
+    <li>elem.attributes - свойство, возвращает объект всех атрибутов элемента.<br>
+</li>
+</ul>
+<h2>data-атрибуты</h2>
+Позволяют добавить тегу произвольный атрибут и получить его значение в JavaScript. 
+Эту возможность используют для того, чтобы упростить написание кода,
+ например связать данные и разметку по уникальному идентификатору, 
+ указать тип действия кнопки и т. п.
+<br>
+<br>
+<code>
+    button type="button" data-action="save">Save /button
+button type="button" data-action="close">Close/button
+</code>
+<br><br>
+
+Для получения значения data-атрибута используется свойство dataset, после которого идет имя атрибута. То есть data- отбрасывается, а остальное имя записывается как имя свойства объекта.
+<br><br>
+<code>
+    const saveBtn = document.querySelector('button[data-action="save"]');
+console.log(saveBtn.dataset.action); // "save"
+
+const closeBtn = document.querySelector('button[data-action="close"]');
+console.log(closeBtn.dataset.action); // "close"
+</code>
+        </p>
+    </section>
+
+</body>
+</html>

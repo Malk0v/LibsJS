@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>События</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <section>
+        <a href="../12_events.html"><<назад</a>
+        <h1>Объект события</h1>
+        <p>
+           Есть два основных события клавиатуры: keydown и keyup. В отличии от других, события клавиатуры обрабатываются на документе, а не на конкретном элементе. Объекты событий клавиатуры происходят от базового класса KeyboardEvent.
+<br><br>
+<code>
+    document.addEventListener("keydown", event => {<br>
+  console.log("Keydown: ", event);<br>
+});
+<br><br>
+document.addEventListener("keyup", event => {<br>
+  console.log("Keyup: ", event);<br>
+});<br>
+</code>
+<br>
+При нажатии клавиши сначала происходит keydown, после чего keyup, когда клавишу отжали. На практике, в основном обрабатывают только событие keydown, так как оно происходит быстрее чем keyup и пользователь раньше видит результат нажатия. События keydown и keyup срабатывают при нажатии любой клавиши, включая служебные (Ctrl, Shift, Alt, Escape и другие).
+
+<h4>ИНТЕРЕСНО!
+Раньше было еще одно событие клавиатуры - keypress. Многие посты на форумах и блогах по-прежнему могут его использовать, но будьте осторожны - оно устарело и поддержка в новых браузерах может прекратиться в любой момент.
+</h4>
+
+<h2>Свойства key и code</h2>
+Свойство key возвращает символ сгенерированный нажатием клавиши, принимая во внимание состояние клавиш модификаторов, например Shift, а так же текущий язык. Свойство code возвращает код физической клавиши на клавиатуре и не изменяется между языками.
+<br><br>
+<code>
+    document.addEventListener("keydown", event => {<br>
+  console.log("key: ", event.key);<br>
+  console.log("code: ", event.code);<br>
+});<br>
+</code>
+<br>
+Поставьте фокус в окно примера кликнув в него мышкой, отслеживание событий клавиатуры стоит на элементе document. Печатайте что-то на клавиатуре и смотрите результат.
+
+<h2>Клавиши-модифкаторы</h2>
+Для обработки комбинации клавиш, например Ctrl + s или любую другую, на объекте события есть свойства ctrlKey, altKey, shiftkey и metaKey, хранящие булевое значение сигнализирующее о том, была зажата клавиша-модификатор или нет.
+<br><br>
+<code>
+    document.addEventListener("keydown", event => {<br>
+  event.preventDefault();<br>
+<br>
+  if ((event.ctrlKey || event.metaKey) && event.code === "KeyS") {<br>
+    console.log("«Ctrl + s» or «Command + s» combo");<br>
+  }<br>
+});<br>
+</code>
+
+<br><br>
+
+Некоторые комбинации клавиш могут конфликтовать с поведением браузера по умолчанию. Например, Ctrl + d или Command + d делает закладку. Нужно стараться проектировать систему комбинаций страницы так, чтобы она не пересекалась со встроенной в браузер. Но, в крайнем случае, поведение по умолчанию можно отменить вызвав метод 
+<br> <br><code>event.preventDefault().</code>
+
+<h4>ИНТЕРЕСНО!</h4>
+Не так давно, вместо свойств key и code использовали свойство keyCode. Многие посты на форумах и блогах по-прежнему могут использовать его, но будьте осторожны - оно устарело, не используйте свойство keyCode.
+        </p>
+    </section>
+
+     ==== пример, нужно смотреть в консоли ====
+
+     <br>
+     <br>
+ 
+    <button type="button" class="btn">Click me</button>
+
+    <script src="../js/59.js" type="module"></script>
+</body>
+</html>

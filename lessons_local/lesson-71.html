@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Формат JSON</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <section>
+        <a href="../16_local_Storage.html"><<назад</a>
+        <h1>Формат JSON</h1>
+
+        <p>
+            JSON (JavaScript Object Notation) - современный текстовый формат хранения и передачи структурированных данных в текстовом виде. Привычный объектоподобный синтаксис JSON очень удобен. Именно в этом формате данные будут приходить и отправляться на сервер, сохраняться в локальном хранилище и т. п.
+<br><br>
+Но JSON - это не объект, а его строковое представление. Ниже приведен пример JSON файла. Синтаксис похож на объект, за исключением того, что ключи это всегда строки в двойных кавычках. Строчные значения также обязательно должны быть заключены в двойные кавычки. Значениями свойств могут быть типы string, number, object, array, boolean и null.
+<br><br>
+<code>
+user.json
+<br>    {
+<br>  "name": "Josh",
+ <br> "weight": 175,
+ <br> "age": 30,
+ <br> "eyecolor": "brown",
+ <br> "isHappy": true,
+ <br> "cars": ["Chevy", "Honda"],
+ <br> "favoriteBook": {
+ <br>   "title": "The Last Kingdom",
+ <br>   "author": "Bernard Cornwell",
+<br>    "rating": 8.38
+<br>  }
+<br>}
+</code>
+<br>
+Javascript и JSON отлично работают вместе благодаря методам встроенного класса JSON, которые преобразуют JavaScript объект в JSON и обратно. Независимо от того, что у вас есть, можно легко получить обратное.
+
+<h2>
+    Метод JSON.stringify()
+</h2>
+
+Принимает значение и преобразовывает его в JSON. Значением может быть число, буль, null, массив или обьект. Строки это уже валидный JSON поэтому их преобразование не имеет смысла.
+<code>
+
+const dog = {
+ <br> name: "Mango",
+ <br> age: 3,
+ <br> isHappy: true,
+<br>};
+<br>
+<br>const dogJSON = JSON.stringify(dog);
+<br>console.log(dogJSON); // "{"name":"Mango","age":3,"isHappy":true}"
+</code>
+
+Результат вызова JSON.stringify(dog) это валидный JSON (строка), который может быть сохранен в файл или передан по сети.
+<br>
+Не любой JavaScript объект может быть преобразован один к одному в JSON. Например, если у объекта есть методы, то при преобразовании они будут проигнорированы.
+
+<code>
+const dog = {
+ <br> name: "Mango",
+ <br> age: 3,
+ <br> isHappy: true,
+ <br> bark() {
+ <br>   console.log("Woof!");
+ <br> },
+<br>};
+<br>
+<br>const dogJSON = JSON.stringify(dog);
+<br>console.log(dogJSON); // "{"name":"Mango","age":3,"isHappy":true}"
+</code>
+
+Также при попытке преобразовать функцию в JSON, результатом будет undefined.
+
+<code>
+ JSON.stringify(() => console.log("Well, this is awkward")); // undefined
+</code>
+
+<h2>
+    Метод JSON.parse()
+</h2>
+Чтобы получить из JSON валидное JavaScript значение, его необходимо распарсить (parse). Это операция обратная преобразованию в строку (stringify). Теперь, когда dog это валидный объект, с ним можно работать как обычно.
+
+<code>
+const json = '{"name":"Mango","age":3,"isHappy":true}';
+<br>
+<br>const dog = JSON.parse(json);
+console.log(dog); // {name: "Mango", age: 3, isHappy: true}
+<br>console.log(dog.name); // "Mango"
+</code>
+
+<h2>
+    Обработка ошибок
+</h2>
+Если методам класса JSON передать невалидный JSON, то они «выбросят» ошибку и весь скрипт упадёт. Для того чтобы избежать этого, используется конструкция try...catch, которая позволяет «ловить» и обрабатывать ошибки выполнения скрипта.
+
+<code>
+try {
+<br>  // Code that may throw a runtime error
+<br>} catch (error) {
+<br>  // Error handling
+<br>}
+</code>
+
+Сначала выполняется код внутри блока try.
+Если ошибок нет, блок catch игнорируется и управление передаётся дальше.
+Если в блоке try произошла ошибка, его выполнение останавливается и интерпретатор переходит в блок catch.
+Переменная error это объект ошибки с информацией о том, что произошло. У этого объекта есть несколько полезных свойств:
+
+<ul>
+<li>name - тип ошибки. Для ошибки парса это SyntaxError.</li>
+<li>message - сообщение о деталях ошибки.</li>
+<li>stack - стек вызовов функций на момент ошибки. Используется для отладки.</li>
+</ul>
+Например, парс строки приведет к такому сценарию, потому что строка с символами это не валидный JSON, так как не может быть преобразована к валидному JavaScript значению.
+<code>
+// Script will crash during parse
+<br>const data = JSON.parse("Well, this is awkward");
+<br>console.log("❌ You won't see this log");
+</code>
+
+Используя конструкцию try...catch мы можем обработать это исключение так, чтобы скрипт продолжил работать даже в случае ошибки.
+
+<code>
+try {
+<br>  const data = JSON.parse("Well, this is awkward");
+<br>} catch (error) {
+<br>  console.log(error.name); // "SyntaxError"
+<br>  console.log(error.message); // Unexpected token W in JSON at position 0
+<br>}
+<br>
+<br>console.log("✅ This is fine, we handled parse error in try...catch");
+</code>
+
+Тоже самое будет при попытке парса невалидного JSON, который, например, может прийти от бэкенда или быть прочитан из файла. В примере у свойства username не хватает обрамляющих двойных кавычек.
+
+<code>
+ try {
+ <br> const data = JSON.parse('{username: "Mango"}');
+<br>} catch (error) {
+<br>  console.log(error.name); // "SyntaxError"
+<br>  console.log(error.message); // "Unexpected token u in JSON at position 1"
+<br>}
+<br>
+<br>console.log("✅ This is fine, we handled parse error in try...catch");
+</code>
+
+<h2>
+    Фазы выполнения кода
+</h2>
+
+В JavaScript код исполняется не сразу, для начала движку нужно прочитать код и узнать можно ли его вообще выполнить.
+<br><br>
+Фаза интерпретации или оценки (compile time, evaluation time) - подготовка перед исполнением кода, движок находит синтаксические ошибки, ошибки типизации и т. д. То есть код еще не выполняется, только оценивается. Если эта фаза прошла успешно, это как минимум значит, что в коде нет синтаксических ошибок и его можно запустить на исполнение.
+<br><br>
+Фаза исполнения (runtime) - скрипт начинает исполняться, выполняются инструкции вызовов функций и оценки выражений, происходит поиск необходимых идентификаторов в соответствующих областях видимости и тому подобное.
+<br><br>
+Если эта фаза завершилась успешно, значит скрипт написан без явных ошибок и закончил свою работу. На этой фазе могут быть ошибки, связанные с отсутствующими свойствами и переменными, преобразованием типов и т. д., то есть что-то, что происходит только во время выполнения кода.
+<br><br>
+Попробуйте выполнить следующий код. Так как мы сделали опечатку и вместо const пытаемся объявить переменную value ключевым словом cos, на фазе компиляции будет выявлена синтаксическая ошибка и фаза исполнения даже не запустится. В консоли мы сразу увидим сообщение об ошибке.
+<br>
+
+<code>
+    console.log('This message will not appear in the console');
+<br>
+cos value = 5;
+</code>
+
+
+<h4>ИНТЕРЕСНО
+    try...catch ловит только ошибки которые произошли во время выполнения кода 
+(runtime errors). Это значит, что код должен быть синтаксически правильным, 
+иначе фаза выполнения просто не запустится. Ошибки, которые возникают во время фазы оценки, 
+называются ошибками парсинга.
+</h4>
+
+    </p>
+    </section>
+</body>
+</html>

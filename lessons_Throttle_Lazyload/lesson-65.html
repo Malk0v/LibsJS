@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Throttle</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <section>
+        <a href="../14_Throttle_Lazyload.html"><<назад</a>
+        <h1>Throttle и Debounce</h1>
+        <p>
+Довольно часто необходимо обработать изменение размера окна, скролл, перемещение мыши или текстовый ввод пользователя. Это может быть сортировка коллекции и отрисовка результатов, анимация элемента, манипуляции с DOM-деревом и прочее. Все это улучшает UX (user experience), но, к сожалению, даёт большую нагрузку на браузер из-за того, что обработчики событий срабатывают слишком часто. Такие события неофициально называют «chatty events».
+<br><br>
+Например, если добавить слушателя события на скролл, то при прокрутке страницы мышкой можно вызвать около 30 событий в секунду. Медленная прокрутка (свайп) в смартфоне может вызвать до 100 событий в секунду. Если обработчик события скролла выполняет тяжелые вычисления и другие DOM-манипуляции, гарантированно будут проблемы с производительностью.
+<br><br>
+Throttle и Debounce - это два похожих, но разных по поведению приёма, позволяющих контролировать сколько раз мы разрешаем выполнение функции с течением времени. Используем их реализацию из библиотеки Lodash.
+
+<h2>Подключение библиотеки</h2>
+CDN (Content Delivery Network) - это географически распределённая сетевая инфраструктура, обеспечивающая быструю доставку контента пользователям веб-сервисов и сайтов. Входящие в состав CDN cерверы географически располагаются таким образом, чтобы сделать время ответа для пользователей сайта/сервиса минимальным.
+<br><br>
+Подключим в проект библиотеку Lodash через CDN. Для этого используем сервис cdnjs.com и добавим ссылку на скрипт библиотеки в конец HTML-документа, как показано в примере.
+<br><br>
+
+<code>
+    <!-- Lodash library script file -->
+   <br> script
+     <br> async
+     <br> src="https://cdnjs.cloudflare.com/ajax/libs
+     <br>/lodash.js/4.17.21/lodash.min.js"
+     <br> integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/
+     <br>2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
+     <br> crossorigin="anonymous"
+     <br> referrerpolicy="no-referrer"
+    <br>/script
+   <br> <!-- Your script file -->
+   <br> script defer src="path/to/script.js"/script
+</code>
+<br>
+Теперь мы можем получить доступ к библиотеке в нашем скрипте. При подключении библиотек через CDN, на объект window добавляется свойство в котором хранится то, что предоставляет библиотека. Имя этого свойства уникально для библиотеки и описано в её документации. Для Lodash это символ нижнего подчёркивания _. Для проверки используем метод add, который просто складывает два числа.
+<br><br>
+<code>
+    script.js<br>
+const result = _.add(2, 3);<br>
+console.log(result); // 5<br>
+</code>
+
+<h2>Throttle</h2>
+Прием throttle контролирует количество раз которое функция может быть вызвана в течение промежутка времени. То есть позволяет вызывать функцию не чаще чем один раз в N миллисекунд, гарантируя ее регулярное выполнение.
+<br>
+Используя throttle мы не контролируем, как часто браузер будет генерировать события. Мы всего-лишь берем контроль над частотой выполнения функции обработчика события.
+<br><br>
+<code>
+
+document.addEventListener(<br>
+  "scroll",<br>
+  _.throttle(() => {<br>
+    console.log("Scroll handler call every 300ms");<br>
+  }, 300)<br>
+);<br>
+</code>
+<br>
+Реализация из библиотеки Lodash ожидает первым аргументом функцию которую необходимо «затормозить», а вторым количество миллисекунд. Возвращает новую функцию для передачи в слушатель события.
+
+
+<h2>Debounce</h2>
+Прием debounce гарантирует, что функция будет вызвана только если между событиями будет пауза в N миллисекунд. Например, пока пользователь скролит страницу функция не вызовется, но как только он перестал скролить, функция будет вызвана через 300 миллисекунд. Если скролл возобновится раньше чем через 300 миллисекунд после паузы, функция не вызовется.
+<br><br>
+Используя debounce мы не управляем тем как часто браузер будет генерировать события, а всего-лишь берем контроль над частотой выполнения функции обработчика события.
+<br><br>
+<code>
+    document.addEventListener(<br>
+  "scroll",<br>
+  _.debounce(() => {<br>
+    console.log("Scroll handler call after 300ms pause");<br>
+  }, 300)<br>
+);<br>
+</code>
+<br>
+Реализация из библиотеки Lodash ожидает первым аргументом функцию, а вторым количество миллисекунд. Возвращает новую функцию для передачи в слушатель события.
+
+
+<h2>Режимы метода debounce</h2>
+По умолчанию метод debounce работает в режиме когда функция вызывается через N миллисекунд после паузы между потоками событий. Этот режим называется trailing edge (в конце). Есть задачи когда функцию надо вызвать сразу при наступлении первого события в потоке, а потом игнорировать все последующие события, до паузы между ними, например в 300 миллисекунд. На старте следующего потока событий это поведение повторяется. Такой режим называется leading edge (в начале).
+<br><br>
+Методу debounce библиотеки Lodash можно передать необязательный третий аргумент - обьект параметров в котором есть два свойства leading (по умолчанию false) и trailing (по умолчанию true). Эти настройки изменяют режим и указывают, должна ли функция запускаться в начале потока событий или в конце после паузы.
+<br><br>
+<code>
+    document.addEventListener( <br>
+  "scroll",<br>
+  _.debounce(<br>
+    () => {<br>
+      console.log("Scroll handler call on every event stream start");<br>
+    },<br>
+    300,<br>
+    {<br>
+      leading: true,<br>
+      trailing: false,<br>
+    }<br>
+  )<br>
+);<br>
+</code>
+<br>
+На практике режим leading может применяться например в случае когда необходимо выполнить функцию отправки запроса на сервер при первом клике кнопки, после чего игнорировать все послудующие клики до паузы. В примере реализован debounce в обоих режимах для события scroll.
+        </p>
+    </section>
+
+    <p class="cta">Scroll me</p>
+
+<div class="container">
+  <div class="box">
+    <p>No timing function</p>
+    <span class="output vanilla">0</span>
+  </div>
+
+  <div class="box">
+    <p>Throttled</p>
+    <span class="output throttled">0</span>
+  </div>
+
+  <div class="box">
+    <p>Trailing debounce</p>
+    <span class="output trailing">0</span>
+  </div>
+
+  <div class="box">
+    <p>Leading debounce</p>
+    <span class="output leading">0</span>
+  </div>
+</div>
+
+    <style>
+    
+        body {
+  height: 5000vh;
+  line-height: 1.5;
+  color: #212121;
+  background-color: #f5f5f5;
+}
+
+.cta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+
+.cta::before,
+.cta::after {
+  content: "\2193";
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+.container {
+  position: sticky;
+  top: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.box {
+  min-width: 160px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+  margin-right: 8px;
+  padding: 12px;
+  border: 1px solid #03a9f4;
+  border-radius: 4px;
+}
+
+.box p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.box span {
+  font-size: 48px;
+  font-family: monospace;
+}
+    </style>
+
+
+<script
+      async
+      src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
+      integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    
+        <script
+         src="https://cdnjs.cloudflare.com/ajax/libs/jquery-throttle-debounce/1.1/jquery.ba-throttle-debounce.min.js"
+         integrity="sha512-JZSo0h5TONFYmyLMqp8k4oPhuo6yNk9mHM+FY50aBjpypfofqtEWsAgRDQm94ImLCzSaHeqNvYuD9382CEn2zw==" 
+         crossorigin="anonymous" 
+         referrerpolicy="no-referrer">
+        </script>
+
+
+    <script src="../js/65.js" type="module"></script>
+</body>
+</body>
+</html>
