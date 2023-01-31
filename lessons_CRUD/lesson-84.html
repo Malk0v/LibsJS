@@ -15,109 +15,134 @@
 
             Для взаимодействия с ресурсами бэкенда используется четыре операции: создание (create), чтение (read), обновление (update) и удаление (delete). Для каждой из них определен стандартный HTTP-метод.
 
-Method	Description
-POST	Операция create - создать новый ресурс.
-GET	Операция read - получить набор ресурсов или один ресурс по идентификатору.
-PUT и PATCH	Операция update - обновить ресурс по идентификатору.
-DELETE	Операция delete - удалить ресурс по идентификатору
+<img src="../img/crud.png" alt="Method	Description" width="100%">
+
+<ul>
+    <li>POST	Операция create - создать новый ресурс.</li>
+    <li>GET	Операция read - получить набор ресурсов или один ресурс по идентификатору.</li>
+    <li>PUT и PATCH	Операция update - обновить ресурс по идентификатору.</li>
+    <li>DELETE	Операция delete - удалить ресурс по идентификатору</li>
+</ul>
+
 Будем делать запросы к JSONPlaceholder API, который предоставляет коллекцию не настоящих постов в ресурсе /posts, представленных объектами со свойствами id, author и body.
 
-Чтение
-HTTP-метод GET используется для получения существующих данных. Метод fetch() должен отправить на сервер GET-запрос без тела. Бэкенд, по получению запроса, обработает его и в ответе вернет необходимые ресурсы.
+<h2>Чтение</h2>
+HTTP-метод GET используется для получения существующих данных. Метод <span>fetch()</span> должен отправить на сервер GET-запрос без тела. Бэкенд, по получению запроса, обработает его и в ответе вернет необходимые ресурсы.
 
-Получим массив всех постов. Для этого обращаемся к ресурсу /posts описанному в документации бэкенда. Метод fetch() по умолчанию делает GET-запрос, поэтому переопределять опции запроса не обязательно.
+Получим массив всех постов. Для этого обращаемся к ресурсу <span>/posts </span> описанному в документации бэкенда. Метод <span>fetch()</span> по умолчанию делает GET-запрос, поэтому переопределять опции запроса не обязательно.
 
-fetch("https://jsonplaceholder.typicode.com/posts")
-  .then(response => response.json())
-  .then(posts => console.log(posts))
-  .catch(error => console.log(error));
+<code>
+    fetch("https://jsonplaceholder.typicode.com/posts")
+<br> .then(response => response.json())
+<br>  .then(posts => console.log(posts))
+<br>  .catch(error => console.log(error));
+</code>
 
 Получим один пост по идентификатору (свойство id) добавив его к ресурсу /posts/:postId. Последняя часть этого пути называется динамический параметр и в документации описывается как /ресурс/:параметр. Ресурс неизменен, это путь к целой коллекции, а значение параметра меняется для каждого её элемента.
 
-// Change this number to fetch different post
-const postId = 1;
+<code>
+    // Change this number to fetch different post
+<br> const postId = 1;
+<br>
+<br>fetch(`https://jsonplaceholder.
+<br>typicode.com/posts/${postId}`)
+<br>  .then(response => response.json())
+<br>  .then(post => console.log(post))
+<br>  .catch(error => console.log(error));
+</code>
 
-fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`)
-  .then(response => response.json())
-  .then(post => console.log(post))
-  .catch(error => console.log(error));
+<h2>Создание</h2>
+Метод POST используется для добавления нового ресурса. Метод <span>fetch() </span> должен отправить на сервер POST-запрос, в теле которого будет объект с полями author и body, идентификатор будет автоматически создан базой данных. Результатом такого запроса будет объект добавленный в базу данных.
 
-Создание
-Метод POST используется для добавления нового ресурса. Метод fetch() должен отправить на сервер POST-запрос, в теле которого будет объект с полями author и body, идентификатор будет автоматически создан базой данных. Результатом такого запроса будет объект добавленный в базу данных.
+<code>
+    const postToAdd = {
+<br>   author: "Mango",
+<br>   body: "CRUD is awesome",
+<br> };
+<br> 
+<br> const options = {
+<br>   method: "POST",
+<br>   body: JSON.stringify(postToAdd),
+<br>   headers: {
+<br>     "Content-Type": "application/json; charset=UTF-8",
+<br>   },
+<br> };
+<br> 
+<br> fetch("https://jsonplaceholder.
+<br>typicode.com/posts", options)
+<br>   .then(response => response.json())
+<br>   .then(post => console.log(post))
+<br>   .catch(error => console.log(error));
+</code>
 
-const postToAdd = {
-  author: "Mango",
-  body: "CRUD is awesome",
-};
+Делаем запрос на создание поста обращаясь к ресурсу <span>/posts</span> , но в настройках метода <span>fetch()</span> изменяем HTTP-метод на POST. Так бэкенд знает, что нужно не прочитать уже существующее, а создать новый ресурс в этой коллекции.
 
-const options = {
-  method: "POST",
-  body: JSON.stringify(postToAdd),
-  headers: {
-    "Content-Type": "application/json; charset=UTF-8",
-  },
-};
-
-fetch("https://jsonplaceholder.typicode.com/posts", options)
-  .then(response => response.json())
-  .then(post => console.log(post))
-  .catch(error => console.log(error));
-
-Делаем запрос на создание поста обращаясь к ресурсу /posts, но в настройках метода fetch() изменяем HTTP-метод на POST. Так бэкенд знает, что нужно не прочитать уже существующее, а создать новый ресурс в этой коллекции.
-
-Тело запроса должно быть строкой, потому что протокол HTTP передает все как текст. При передаче сложных типов данных, их обязательно необходимо привести к строке методом JSON.stringify(). Не забываем указать заголовок Content-Type, который уточняет для бэкенда тип передаваемых данных.
+Тело запроса должно быть строкой, потому что протокол HTTP передает все как текст. При передаче сложных типов данных, их обязательно необходимо привести к строке методом <span>JSON.stringify()</span> . Не забываем указать заголовок Content-Type, который уточняет для бэкенда тип передаваемых данных.
 
 В ответ, если все хорошо, получим JSON с добавленным id. Идентификатор будет уникальным для каждого объекта.
 
-{
-  "id": 1,
-  "author": "Mango",
-  "content": "CRUD is awesome"
-}
+<code>
+    {
+<br>   "id": 1,
+<br>   "author": "Mango",
+<br>   "content": "CRUD is awesome"
+<br> }
+</code>
 
-Обновление
-Методы PUT и PATCH используются для обновления существующих данных. Какой метод использовать будет написано в документации бэкенда. Метод fetch() должен отправить на сервер запрос, в теле которого необходимо указать объект с полями для изменения. Путь указывает в какой коллекции и какой элемент мы хотим обновить. Бекенд, по получению запроса, обработает его и в ответе вернет обновленный ресурс.
+<h2>Обновление</h2>
+Методы <span>PUT и PATCH</span> используются для обновления существующих данных. Какой метод использовать будет написано в документации бэкенда. Метод <span>fetch()</span> должен отправить на сервер запрос, в теле которого необходимо указать объект с полями для изменения. Путь указывает в какой коллекции и какой элемент мы хотим обновить. Бекенд, по получению запроса, обработает его и в ответе вернет обновленный ресурс.
 
-// Change value of id property to update different post
-const postToUpdate = {
-  id: 1,
-  body: "CRUD is really awesome",
-};
-
-const options = {
-  method: "PATCH",
-  body: JSON.stringify(postToUpdate),
-  headers: {
-    "Content-Type": "application/json; charset=UTF-8",
-  },
-};
-
-fetch(`https://jsonplaceholder.typicode.com/posts/${postToUpdate.id}`, options)
-  .then(response => response.json())
-  .then(post => console.log(post))
-  .catch(error => console.log("ERROR" + error));
+<code>
+    // Change value of id property to update different post
+<br>const postToUpdate = {
+<br>  id: 1,
+<br>  body: "CRUD is really awesome",
+<br>};
+<br>
+<br>const options = {
+<br>  method: "PATCH",
+<br>  body: JSON.stringify(postToUpdate),
+<br>  headers: {
+<br>    "Content-Type": "application/json; charset=UTF-8",
+<br>  },
+<br>};
+<br>
+<br>fetch(`https://jsonplaceholder.typicode.com
+<br>/posts/${postToUpdate.id}`, options)
+<br>  .then(response => response.json())
+<br>  .then(post => console.log(post))
+<br>  .catch(error => console.log("ERROR" + error));
 
 В ответ, если все хорошо, получим обновленный объект.
 
 {
-  id: 1,
-  author: 'Mango',
-  content: 'CRUD is really awesome',
-}
+<br>  id: 1,
+<br>  author: 'Mango',
+<br>  content: 'CRUD is really awesome',
+<br>}
+</code>
 
-ИНТЕРЕСНО
+<h4>
+    ИНТЕРЕСНО
 Метод PATCH заменяет в существующем ресурсе значения переданные в теле запроса свойств. Метод PUT полностью заменяет ресурс.
 
-Удаление
-Метод DELETE используется для удаления существующих данных. Метод fetch() должен отправить на сервер DELETE-запрос без тела. Путь указывает в какой коллекции и какой элемент мы хотим удалить. Бекенд, по получению запроса, обработает его, удалит ресурс из коллекции и в ответе вернет статус результата.
+</h4>
 
-const postIdToDelete = 1;
+<h2>Удаление</h2>
 
-fetch(`https://jsonplaceholder.typicode.com/posts/${postIdToDelete}`, {
-  method: "DELETE",
-})
-  .then(() => console.log("Post deleted"))
-  .catch(error => console.log("Error:", error));
+Метод <span>DELETE</span> используется для удаления существующих данных. Метод <span>fetch()</span> должен отправить на сервер DELETE-запрос без тела. Путь указывает в какой коллекции и какой элемент мы хотим удалить. Бекенд, по получению запроса, обработает его, удалит ресурс из коллекции и в ответе вернет статус результата.
+
+<code>
+    const postIdToDelete = 1;
+<br>
+<br>fetch(`https://jsonplaceholder.
+<br> typicode.com/posts/${postIdToDelete}`, {
+<br>  method: "DELETE",
+<br>})
+<br>  .then(() => console.log("Post deleted"))
+<br>  .catch(error => console.log("Error:", error));
+</code>
+
         </p>
     </section>
 </body>
