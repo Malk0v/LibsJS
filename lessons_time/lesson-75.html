@@ -82,112 +82,125 @@ console.log(date.toString());
 </code>
 
 Другой способ создания новых объектов - это передать семь чисел, которые описывают год, месяц (начинается с 0), день, часы, минуты, секунды и миллисекунды. Обязательны только первые три.
-
+<code>
 const date = new Date(2030, 2, 16, 14, 25, 0, 0);
-console.log(date);
-// Sat Mar 16 2030 14:25:00 GMT+0200 (Eastern European Standard Time)
+<br> console.log(date);
+<br> // Sat Mar 16 2030 14:25:00 GMT+0200 (Eastern European Standard Time)
+</code>
 
-Методы
-Экземпляр класса Date имеет множество методов для чтения и записи значений даты и времени. Методы возвращают или присваивают год, месяц, день месяца или недели, час, минуту, секунду и миллисекунду для каждого экземпляра. Эти данные могут быть представлены в виде строки с учетом местного календаря или языка.
+<h2>Методы</h2>
+Экземпляр класса <span>Date</span> имеет множество методов для чтения и записи значений даты и времени. Методы возвращают или присваивают год, месяц, день месяца или недели, час, минуту, секунду и миллисекунду для каждого экземпляра. Эти данные могут быть представлены в виде строки с учетом местного календаря или языка.
 
-Геттеры
+<h2>Геттеры</h2>
+
 Геттеры используются для чтения всей даты или отдельной составляющей. Возвращаемое значение зависит от текущего часового пояса установленного на вашем компьютере.
 
-const date = new Date();
-console.log("Date: ", date);
+<code>
+    const date = new Date();
+<br> console.log("Date: ", date);
+<br> 
+<br> // Возвращает день месяца от 1 до 31
+<br> console.log("getDate(): ", date.getDate());
+<br> 
+<br> // Возвращает день недели от 0 до 6
+<br> console.log("getDay(): ", date.getDay());
+<br> 
+<br> // Возвращает месяц от 0 до 11
+<br> console.log("getMonth(): ", date.getMonth());
+<br> 
+<br> // Возвращает год из 4 цифр
+<br> console.log("getFullYear(): ", date.getFullYear());
+<br> 
+<br> // Возвращает час
+<br> console.log("getHours(): ", date.getHours());
+<br> 
+<br> // Возвращает минуты
+<br> console.log("getMinutes(): ", date.getMinutes());
+<br> 
+<br> // Возвращает секунды
+<br> console.log("getSeconds(): ", date.getSeconds());
+<br> 
+<br> // Возвращает миллисекунды
+<br> console.log("getMilliseconds(): ", date.getMilliseconds());
 
-// Возвращает день месяца от 1 до 31
-console.log("getDate(): ", date.getDate());
-
-// Возвращает день недели от 0 до 6
-console.log("getDay(): ", date.getDay());
-
-// Возвращает месяц от 0 до 11
-console.log("getMonth(): ", date.getMonth());
-
-// Возвращает год из 4 цифр
-console.log("getFullYear(): ", date.getFullYear());
-
-// Возвращает час
-console.log("getHours(): ", date.getHours());
-
-// Возвращает минуты
-console.log("getMinutes(): ", date.getMinutes());
-
-// Возвращает секунды
-console.log("getSeconds(): ", date.getSeconds());
-
-// Возвращает миллисекунды
-console.log("getMilliseconds(): ", date.getMilliseconds());
-
+</code>
 Существуют эквивалентные версии этих методов, которые возвращают значения в формате UTC (Coordinated Universal Time), а не адаптированные к текущему часовому поясу пользователя.
 
-const date = new Date();
-console.log("Date: ", date);
+<code>
+    const date = new Date();
+<br> console.log("Date: ", date);
+<br> 
+<br> // Возвращает день месяца от 1 до 31
+<br> console.log("getUTCDate(): ", date.getUTCDate());
+<br> 
+<br> // Возвращает день недели от 0 до 6
+<br> console.log("getUTCDay(): ", date.getUTCDay());
+<br> 
+<br> // Возвращает месяц от 0 до 11
+<br> console.log("getUTCMonth(): ", date.getUTCMonth());
+<br> 
+<br> // Возвращает год из 4 цифр
+<br> console.log("getUTCFullYear(): ", date.getUTCFullYear());
+<br> 
+<br> // Возвращает час
+<br> console.log("getUTCHours(): ", date.getUTCHours());
+<br> 
+<br> // Возвращает минуты
+<br> console.log("getUTCMinutes(): ", date.getUTCMinutes());
+<br> 
+<br> // Возвращает секунды
+<br> console.log("getUTCSeconds(): ", date.getUTCSeconds());
+<br> 
+<br> // Возвращает миллисекунды
+<br> console.log("getUTCMilliseconds(): ", date.getUTCMilliseconds());
+</code>
 
-// Возвращает день месяца от 1 до 31
-console.log("getUTCDate(): ", date.getUTCDate());
+<h2>Сеттеры</h2>
+Все, что можно прочитать можно записать, методы для записи называются также как геттеры, но начинаются с приставки <span>set</span>. Также для всех методов есть их UTC эквивалент.
 
-// Возвращает день недели от 0 до 6
-console.log("getUTCDay(): ", date.getUTCDay());
+<code>
+const date = new Date("March 16, 2030 14:25:00");
+<br> 
+<br> date.setMinutes(50);
+<br> // "Sat Mar 16 2030 14:50:00 GMT+0200"
+<br> 
+<br> date.setFullYear(2040, 4, 8);
+<br> // "Tue May 08 2040 14:50:00 GMT+0300"
+</code>
 
-// Возвращает месяц от 0 до 11
-console.log("getUTCMonth(): ", date.getUTCMonth());
+<h2>
+    Форматирование даты
+</h2>
 
-// Возвращает год из 4 цифр
-console.log("getUTCFullYear(): ", date.getUTCFullYear());
+Объект даты может быть представлен в разных строчных и числовых форматах. Для этого существует целый набор методов. Например, <span>toString()</span>, <span>toDateString()</span> и <span>toTimeString()</span> возвращают стандартное строчное представление, не заданное жёстко в стандарте, а зависящее от браузера. Единственное требование к нему - читаемость человеком. Метод <span>toString()</span> возвращает дату целиком, а <span>toDateString()</span> и <span>toTimeString()</span> - только дату и время соответственно.
 
-// Возвращает час
-console.log("getUTCHours(): ", date.getUTCHours());
-
-// Возвращает минуты
-console.log("getUTCMinutes(): ", date.getUTCMinutes());
-
-// Возвращает секунды
-console.log("getUTCSeconds(): ", date.getUTCSeconds());
-
-// Возвращает миллисекунды
-console.log("getUTCMilliseconds(): ", date.getUTCMilliseconds());
-
-Сеттеры
-Все, что можно прочитать можно записать, методы для записи называются также как геттеры, но начинаются с приставки set. Также для всех методов есть их UTC эквивалент.
-
+<code>
 const date = new Date("March 16, 2030 14:25:00");
 
-date.setMinutes(50);
-// "Sat Mar 16 2030 14:50:00 GMT+0200"
-
-date.setFullYear(2040, 4, 8);
-// "Tue May 08 2040 14:50:00 GMT+0300"
-
-Форматирование даты
-Объект даты может быть представлен в разных строчных и числовых форматах. Для этого существует целый набор методов. Например, toString(), toDateString() и toTimeString() возвращают стандартное строчное представление, не заданное жёстко в стандарте, а зависящее от браузера. Единственное требование к нему - читаемость человеком. Метод toString() возвращает дату целиком, а toDateString() и toTimeString() - только дату и время соответственно.
-
-const date = new Date("March 16, 2030 14:25:00");
-
-date.toString();
-// "Sat Mar 16 2030 14:25:00 GMT+0200 (Eastern European Standard Time)"
-
-date.toTimeString();
-// "14:25:00 GMT+0200 (Eastern European Standard Time)"
-
-date.toLocaleTimeString();
-// "2:25:00 PM"
-
-date.toUTCString();
-// "Sat, 16 Mar 2030 12:25:00 GMT"
-
-date.toDateString();
-// "Sat Mar 16 2030"
-
-date.toISOString();
-// "2030-03-16T12:25:00.000Z"
-
-date.toLocaleString();
-// "3/16/2030, 2:25:00 PM"
-
-date.getTime();
-// 1899894300000
+<br>     date.toString();
+<br> // "Sat Mar 16 2030 14:25:00 GMT+0200 (Eastern European Standard Time)"
+<br> 
+<br> date.toTimeString();
+<br> // "14:25:00 GMT+0200 (Eastern European Standard Time)"
+<br> 
+<br> date.toLocaleTimeString();
+<br> // "2:25:00 PM"
+<br> 
+<br> date.toUTCString();
+<br> // "Sat, 16 Mar 2030 12:25:00 GMT"
+<br> 
+<br> date.toDateString();
+<br> // "Sat Mar 16 2030"
+<br> 
+<br> date.toISOString();
+<br> // "2030-03-16T12:25:00.000Z"
+<br> 
+<br> date.toLocaleString();
+<br> // "3/16/2030, 2:25:00 PM"
+<br> 
+<br> date.getTime();
+<br> // 1899894300000
+</code>
         </p>
     </section>
 </body>
