@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Методы класса Promise</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <section>
+        <a href="../18_Promise.html"><<назад</a>
+        <h1>Методы класса Promise</h1>
+        <p>
+           Есть задачи, в которых необходимо работать с целым набором промисов. В одном случае необходимо дождаться выполнения всех сразу, и только потом обрабатывать их результат, а в другом достаточно дождаться выполнения любого, проигнорировав остальные и т. п. Именно для этих случаев у класса Promise есть статические методы для работы с одним или группой промисов.
+
+
+        <h2><code>Promise.all()</code></h2>
+Принимает массив промисов, ждет их исполнения и возвращает промис. Если все промисы выполнятся успешно, возвращаемый промис перейдет в состояние <span>fulfilled</span>, а его значением будет массив результатов исполнения каждого промиса. В случае когда хотя бы один из промисов будет отклонён, то возвращаемый промис перейдет в состояние <span>rejected</span>, а его значением будет ошибка.
+
+<code>
+    Promise.all([promise1, promise2, promise3, ...])
+</code>
+
+Напишем функцию которая принимает текст для <span>resolve()</span> и задержку в миллисекундах, а результатом своего выполнения возвращает промис. Затем создадим два промиса с разным временем задержки.
+
+<code>
+    const makePromise = (text, delay) => {
+<br>   return new Promise(resolve => {
+<br>     setTimeout(() => resolve(text), delay);
+<br>   });
+<br> };
+<br>
+<br>const promiseA = makePromise("promiseA value", 1000);
+<br>const promiseB = makePromise("promiseB value", 3000);
+<br>
+<br>Promise.all([promiseA, promiseB])
+<br>  .then(value => console.log(value)) //["promiseA value", "promiseB value"]
+<br>  .catch(error => console.log(error));
+
+</code>
+
+Коллбэк метода <span>then()</span> будет вызван спустя три секунды, то есть когда выполнится промис<span> promiseB</span>. Промис <span>promiseA </span> выполнится через одну секунду и просто будет ожидать. Если какой либо из промисов будет отклонён, то будет вызван коллбэк метода <span>catch()</span>.
+
+<h2><code>Promise.race()</code></h2>
+Возвращает выполненный или отклонённый промис, в зависимости от того, с каким результатом завершится самый «быстрый» из переданных промисов, со значением или причиной его отклонения.
+
+<code>Promise.race([promise1, promise2, promise3, ...])</code>
+
+Когда хотя бы один промис из массива исполнится или будет отклонён, то возвращаемый промис перейдёт в состояние resolved или rejected, а все остальные будут отброшены.
+<code>
+
+const makePromise = (text, delay) => {
+<br>  return new Promise(resolve => {
+<br>    setTimeout(() => resolve(text), delay);
+<br>  });
+<br>};
+<br>
+<br>const promiseA = makePromise("promiseA value", 1000);
+<br>const promiseB = makePromise("promiseB value", 3000);
+<br>
+<br>Promise.race([promiseA, promiseB])
+<br>  .then(value => console.log(value)) // "promiseA value"
+<br>  .catch(error => console.log(error));
+
+</code>
+
+Коллбэк метода <code>then()</code> или <code>catch() </code> будет вызван спустя одну секунду, когда выполнится promiseA. Второй промис promiseB будет проигнорирован.
+
+<h2><code>Promise.resolve() и Promise.reject()</code></h2>
+Статические методы для создания мгновенно выполняющихся успешно или отклонённых промисов. Работают аналогично new <span>Promise()</span> за исключением возможности указать задержку, но имеют более краткий синтаксис.
+
+<code>
+    // Fulfilled promise
+<br> new Promise(resolve => resolve("success value")).then(value =>
+<br>   console.log(value)
+<br> );
+<br> 
+<br> Promise.resolve("success value").then(value => console.log(value));
+<br> 
+<br> // Rejected promise
+<br> new Promise((resolve, reject) => reject("error")).catch(error =>
+<br>   console.error(error)
+<br> );
+<br> 
+<br> Promise.reject("error").catch(error => console.error(error));
+
+</code>
+
+Эти методы используются при промисификации функций, когда необходимо построить цепочку промисов и начальное значение уже есть. Выполним рефакторинг следующего кода.
+
+<code>
+    const makeGreeting = guestName => {
+<br>   if (guestName === "" || guestName === undefined) {
+<br>     return {
+<br>       success: false,
+<br>       message: "Guest name must not be empty",
+<br>     };
+<br>   }
+<br> 
+<br>   return {
+<br>     success: true,
+<br>     message: `Welcome ${guestName}`,
+<br>   };
+<br> };
+<br> 
+<br> const result = makeGreeting("Mango");
+<br> 
+<br> if (result.success) {
+<br>   console.log(result.message);
+<br> } else {
+<br>   console.error(result.message);
+<br> }
+</code>
+
+При использовании колбеков отпадает необходимость возвращать сложные объекты со статусом операции и проверять его во внешнем коде.
+
+<code>
+    const makeGreeting = (guestName, onSuccess, onError) => {
+ <br> if (guestName === "" || guestName === undefined) {
+<br>    return onError("Guest name must not be empty");
+<br>  }
+<br>  onSuccess(`Welcome ${guestName}`);
+<br>};
+<br>
+<br>makeGreeting(
+<br>  "Mango",
+<br>  greeting => console.log(greeting),
+<br>  error => console.error(error)
+<br>);
+</code>
+
+Последним шагом будет промисификация функции <span>makeGreeting()</span>, для того чтобы полностью убрать её зависимость от внешнего кода.
+
+<code>
+    const makeGreeting = guestName => {
+<br>  if (guestName === "" || guestName === undefined) {
+<br>    return Promise.reject("Guest name must not be empty");
+<br>  }
+<br>
+<br>  Promise.resolve(`Welcome ${guestName}`);
+<br>};
+<br>
+<br>makeGreeting("Mango")
+<br>  .then(greeting => console.log(greeting))
+<br>  .catch(error => console.error(error));
+</code>
+</p>
+    </section>
+</body>
+</html>
