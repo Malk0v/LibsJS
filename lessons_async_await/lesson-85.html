@@ -22,7 +22,8 @@ const fetchFriends = () => {
 
 Далее необходимо запросить профиль пользователя от my-api.com/profile, но профиль не полный, он содержит только критически важную информацию - идентификатор пользователя, без списка друзей.
 
-const fetchFriends = () => {
+<code>
+    const fetchFriends = () => {
   return fetch("my-api.com/me")
     .then(token => {
       return fetch(`my-api.com/profile?token=${token}`);
@@ -31,50 +32,60 @@ const fetchFriends = () => {
       console.log(user.id);
     });
 };
+</code>
 
 И только после этого можно запросить список друзей от my-api.com/users/:userId/friends.
 
-const fetchFriends = () => {
-  return fetch("my-api.com/me")
-    .then(token => {
-      return fetch(`my-api.com/profile?token=${token}`);
-    })
-    .then(user => {
-      return fetch(`my-api.com/users/${user.id}/friends`);
-    });
-};
-
-fetchFriends()
-  .then(friends => console.log(friends))
-  .catch(error => console.error(error));
+<code>
+    const fetchFriends = () => {
+<br>  return fetch("my-api.com/me")
+<br>     .then(token => {
+<br>       return fetch(`my-api.com/profile?token=${token}`);
+<br>     })
+<br>     .then(user => {
+<br>       return fetch(`my-api.com/users/${user.id}/friends`);
+<br>     });
+<br> };
+<br> 
+<br> fetchFriends()
+<br>   .then(friends => console.log(friends))
+<br>   .catch(error => console.error(error));
+</code>
 
 Согласитесь, не самый легкочитаемый код, хотя операции относительно простые. Из-за того, что мы передаем функции-обработчики методу then(), получаются ёлки вложенности.
 
 Асинхронные функции помогают избавиться от коллбэков и вложенных конструкций. При этом они отлично работают в связке с методами then() и catch(), потому что гарантированно возвращают промис.
 
-const fetchFriends = async () => {
-  const token = await fetch("my-api.com/me");
-  const user = await fetch(`my-api.com/profile?token=${token}`);
-  const friends = await fetch(`my-api.com/users/${user.id}/friends`);
-  return friends;
-};
+<code>
+    const fetchFriends = async () => {
+<br>   const token = await fetch("my-api.com/me");
+<br>   const user = await fetch(`my-api.com/profile?token=${token}`);
+<br>   const friends = await fetch(`my-api.com/users/${user.id}/friends`);
+<br>   return friends;
+<br> };
+<br> 
+<br> fetchFriends()
+<br>   .then(friends => console.log(friends))
+<br>   .catch(error => console.error(error));
+</code>
 
-fetchFriends()
-  .then(friends => console.log(friends))
-  .catch(error => console.error(error));
+<h2>
+    Синтаксис async/await
+</h2>
 
-Синтаксис async/await
 Асинхронные функции (async/await) - удобный способ написания асинхронного кода, который внешне становится похож на синхронный. В основе синтаксиса async/await лежат промисы, поэтому он не блокирует главный поток выполнения программы.
 
 Для объявления асинхронной стрелочной функции, перед списком параметров добавляем ключевое слово async. Внутри неё можно использовать оператор await и справа от него поставить что-то, что вернёт промис. Метод response.json() также возвращает промис, поэтому ставим await.
 
-const fetchUsers = async () => {
-  const response = await fetch("https://jsonplaceholder.typicode.com/users");
-  const users = await response.json();
-  return users;
-};
-
-fetchUsers().then(users => console.log(users));
+<code>
+    const fetchUsers = async () => {
+<br>   const response = await fetch("https://jsonplaceholder.typicode.com/users");
+<br>   const users = await response.json();
+<br>   return users;
+<br> };
+<br> 
+<br> fetchUsers().then(users => console.log(users));
+</code>
 
 Когда интерпретатор встречает await, он приостановливает выполнение этой функции (не всего скрипта) и ждет, пока не выполнится промис справа от await. Как только промис выполнился - исполнение функции возобновляется и на строке ниже нам доступен результат асинхронной операции.
 
@@ -86,137 +97,172 @@ fetchUsers().then(users => console.log(users));
 Если не указать возвращаемое значение, вернется промис со значением undefined.
 Любая функция может быть асинхронной, будь-то метод обьекта, класса, коллбэк, объявление или инлайн функция. Все они смогут использовать оператор await и обязательно вернут промис, потому что будут асинхронными функциями.
 
-// Function declaration
-async function foo() {
-  // ...
-}
+<code>
+    // Function declaration
+<br> async function foo() {
+<br>   // ...
+<br> }
+<br> 
+<br> // Functional expression
+<br> const foo = async function () {
+<br>   // ...
+<br> };
+<br> 
+<br> // Arrow function
+<br> const foo = async () => {
+<br>   // ...
+<br> };
+<br> 
+<br> // Object method
+<br> const user = {
+ <br>  async foo() {
+<br>     // ...
+<br>   },
+<br> };
+<br> 
+<br> // Class method
+<br> class User {
+<br>   async foo() {
+<br>     // ...
+<br>   }
+<br> }
+</code>
 
-// Functional expression
-const foo = async function () {
-  // ...
-};
+<h2>
+    Обработка ошибок
+</h2>
 
-// Arrow function
-const foo = async () => {
-  // ...
-};
-
-// Object method
-const user = {
-  async foo() {
-    // ...
-  },
-};
-
-// Class method
-class User {
-  async foo() {
-    // ...
-  }
-}
-
-Обработка ошибок
 Если результат асинхронной функции (промис) не используется во внешнем коде, ошибки обрабатываются в теле функции конструкцией try...catch. Значение параметра error в блоке catch это ошибка которую сгенерирует await если промис будет отклонен.
 
-const fetchUsers = async () => {
-  try {
-    const response = await fetch("https://jsonplaceholder.typicode.com/users");
-    const users = await response.json();
-    console.log(users);
-  } catch (error) {
-    console.log(error.message);
-  }
-};
-
-fetchUsers();
+<code>
+    const fetchUsers = async () => {
+<br>   try {
+<br>     const response = await fetch("https://jsonplaceholder.typicode.com/users");
+<br>     const users = await response.json();
+ <br>    console.log(users);
+<br>   } catch (error) {
+<br>     console.log(error.message);
+<br>   }
+<br> };
+<br> 
+<br> fetchUsers();
+</code>
 
 Если результат асинхронной функции (промис) используется во внешнем (глобальном) коде, то есть вне других асинхронных функций, ошибки обрабатываются коллбэком методом catch(). Значение параметра error в методе catch() это ошибка которую сгенерирует await если промис будет отклонен.
 
-const fetchUsers = async () => {
-  const response = await fetch("https://jsonplaceholder.typicode.com/users");
-  const users = await response.json();
-  return users;
-};
-
-fetchUsers()
-  .then(users => console.log(users))
-  .catch(error => console.log(error));
+<code>
+    const fetchUsers = async () => {
+<br>   const response = await fetch("https://jsonplaceholder.typicode.com/users");
+<br>   const users = await response.json();
+<br>   return users;
+<br> };
+<br> 
+<br> fetchUsers()
+<br>   .then(users => console.log(users))
+<br>   .catch(error => console.log(error));
+</code>
 
 Так работать не будет - await можно использовать только в теле асинхронной функции.
 
-const fetchUsers = async () => {
-  const response = await fetch("https://jsonplaceholder.typicode.com/users");
-  const users = await response.json();
-  return users;
-};
-
-// ❌ SyntaxError: await is only valid in async function
-const users = await fetchUsers();
+<code>
+    const fetchUsers = async () => {
+<br>   const response = await fetch("https://jsonplaceholder.typicode.com/users");
+<br>   const users = await response.json();
+<br>   return users;
+<br> };
+<br> 
+<br> // ❌ SyntaxError: await is only valid in async function
+<br> const users = await fetchUsers();
+</code>
 
 Если результат асинхронной функции используется в другой асинхронной функции, ошибки обрабатываются конструкцией try...catch. Значение параметра error в блоке catch это ошибка которую сгенерирует await если промис будет отклонен.
 
-const fetchUsers = async () => {
-  const response = await fetch("https://jsonplaceholder.typicode.com/users");
-  const users = await response.json();
-  return users;
-};
+<code>
+    const fetchUsers = async () => {
+<br>   const response = await fetch("https://jsonplaceholder.typicode.com/users");
+<br>   const users = await response.json();
+<br>   return users;
+<br> };
+<br> 
+<br> const doStuff = async () => {
+<br>   try {
+<br>     const users = await fetchUsers();
+ <br>    console.log(users);
+<br>   } catch (error) {
+<br>     console.log(error.message);
+<br>   }
+<br> };
+<br> 
+<br> doStuff();
+</code>
 
-const doStuff = async () => {
-  try {
-    const users = await fetchUsers();
-    console.log(users);
-  } catch (error) {
-    console.log(error.message);
-  }
-};
-
-doStuff();
-
-Параллельные запросы
+<h2>
+    Параллельные запросы
+</h2>
 Если одновременно необходимо сделать несколько запросов, использовать синтаксис async/await нужно очень аккуратно. В следующем примере будут выполнены три последовательных запроса, потому что выполнение асинхронной функции приостанавливается когда интерпретатор встречает await. Кроме того, парс результатов запросов также будет последовательный, что займет больше времени.
 
-const fetchUsers = async () => {
-  const baseUrl = "https://jsonplaceholder.typicode.com";
-  const firstResponse = await fetch(`${baseUrl}/users/1`);
-  const secondResponse = await fetch(`${baseUrl}/users/2`);
-  const thirdResponse = await fetch(`${baseUrl}/users/3`);
-
-  const firstUser = await firstResponse.json();
-  const secondUser = await secondResponse.json();
-  const thirdUser = await thirdResponse.json();
-
-  console.log(firstUser, secondUser, thirdUser);
-};
-
-fetchUsers();
+<code>
+    const fetchUsers = async () => {
+<br>   const baseUrl = "https://jsonplaceholder.typicode.com";
+<br>   const firstResponse = await fetch(`${baseUrl}/users/1`);
+<br>   const secondResponse = await fetch(`${baseUrl}/users/2`);
+<br>   const thirdResponse = await fetch(`${baseUrl}/users/3`);
+<br> 
+<br>   const firstUser = await firstResponse.json();
+<br>   const secondUser = await secondResponse.json();
+<br>   const thirdUser = await thirdResponse.json();
+<br> 
+<br>   console.log(firstUser, secondUser, thirdUser);
+<br> };
+<br> 
+<br> fetchUsers();
+</code>
 
 На вкладке Network хорошо видно, что запуск каждого последующего запроса ожидает пока завершится предыдущий. То есть выолняются они последовательно, что занимает больше времени, которое равно сумме длительностей всех запросов. Это нормально, если запросы зависят друг от друга, то есть следующий использует результат предыдущего.
 
 Concurrent requests
 В нашем случае они полностью независимы, поэтому нужно запустить их параллельно. Для этого создаётся массив промисов, после чего используется метод Promise.all(), для ожидания их выполнения. Массив промисов создается методами map(), filter() и так далее, зависит от задачи.
 
-const fetchUsers = async () => {
-  const baseUrl = "https://jsonplaceholder.typicode.com";
-  const userIds = [1, 2, 3];
-
-  // 1. Создаём массив промисов
-  const arrayOfPromises = userIds.map(async userId => {
-    const response = await fetch(`${baseUrl}/users/${userId}`);
-    return response.json();
-  });
-
-  // 2. Запускаем все промисы параллельно и ждем их завершения
-  const users = await Promise.all(arrayOfPromises);
-  console.log(users);
-};
-
-fetchUsers();
+<code>
+    const fetchUsers = async () => {
+<br>   const baseUrl = "https://jsonplaceholder.typicode.com";
+<br>   const userIds = [1, 2, 3];
+<br> 
+<br>   // 1. Создаём массив промисов
+ <br>  const arrayOfPromises = userIds.map(async userId => {
+ <br>    const response = await fetch(`${baseUrl}/users/${userId}`);
+ <br>    return response.json();
+ <br>  });
+<br> 
+<br>   // 2. Запускаем все промисы параллельно и ждем их завершения
+<br>   const users = await Promise.all(arrayOfPromises);
+<br>   console.log(users);
+<br> };
+<br> 
+<br> fetchUsers();
+</code>
 
 При таком подходе запросы запускаются параллельно, что экономит время ожидания их выполнения, которое равно длительности самого «медленного» из них. Такой приём подходит только если запросы не зависят друг от друга.
 
-Parallel requests
+
 Убедитесь в этом, открыв инструменты разработчика в живом примере. Также мы добавили кнопку при клике на которую выполняется запрос, и обработали возможную ошибку конструкцией try...catch. Это стандартный AJAX-код с использованием асинхронных функций.
-        </p>
+ <br><br>   <button type="button" class="btn">Fetch users</button>
+    <ul class="user-list"></ul>
+</p>
     </section>
+
+    <style>
+        .user-list {
+  margin: 0;
+  list-style: none;
+  padding: 24px;
+}
+
+.user-list .item:not(:last-child) {
+  margin-bottom: 16px;
+}
+    </style>
+
+    <script src="../js/85.js" type="module"></script>
 </body>
 </html>
