@@ -23,12 +23,12 @@ h1{
 h4{
     padding: 10px;
     margin: 10px;
-    outline: 1px solid rgb(175, 164, 164);
     border-radius: 10px;
-    background-color: rgba(218, 243, 218, 0.353);
+    background-color: rgba(189, 249, 229, 0.353);
     font-size: 15px;
     letter-spacing: 1px;
     line-height: 18px;
+    box-shadow: 12px 2px 15px rgba(0, 0, 0, 0.152);
 }
 
 h3{
@@ -40,7 +40,7 @@ h3{
 }
 
 ul{
-    background-color: rgba(244, 244, 244, 0.574);
+    background-color: rgba(255, 255, 255, 0.574);
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.152);
     border-radius: 5px;
 }
