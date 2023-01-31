@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Промисы</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <section>
+        <a href="../18_Promise.html"><<назад</a>
+        <h1>Промисы</h1>
+        <p>
+           Поли обещает испечь торт на мой день рождения через две недели. Если все пойдет хорошо и она не заболеет, у меня будет торт. Если Поли будет плохо себя чувствовать, то не сможет испечь торт. В любом случае, мы все равно устроим вечеринку. Обещание - это не гарантия выполнения, мы не знаем, выполнят его или нет. В программировании также есть задачи результат которых мы узнаем только в будущем.
+
+<img src="../img/promise-story.png " alt="Promise story about cake" width="100%">
+
+Promise (обещание, промис) - объект представляющий текущее состояние асинхронной операции. Это обёртка для значения, неизвестного на момент создания промиса. Позволяет обрабатывать результаты асинхронных операций так, как если бы они были синхронными: вместо конечного результата асинхронной операции возвращается своего рода обещание получить результат в будущем.
+<br> <br>
+Промис может находиться в трёх состояниях:
+<ul>
+    <li>Ожидание (pending) - начальное состояние при создании промиса</li>
+    <li>Исполнено (fulfilled) - операция исполнена успешно, с каким-то результатом</li>
+    <li>Отклонено (rejected) - операция отклонена с ошибкой</li>
+</ul>
+
+<img src="../img/promise-states.png" alt="Promise states" width="100%">
+
+При создании промис находится в ожидании <span>(pending)</span>, после чего может завершиться успешно <span>(fulfilled)</span>, вернув результат (значение), или с ошибкой <span>(rejected)</span>, вернув причину. Когда промис переходит в состояние <span>fulfilled</span> или <span>rejected</span> - это навсегда.
+
+<h4>
+    ИНТЕРЕСНО
+Когда промис исполнен или отклонен, то говорят что он завершён (settled). Это просто термин описывающий то, что промис находится в любом состоянии кроме ожидания.
+
+</h4>
+Отличия промиса и callback-функции:
+
+<ul>
+    <li>Коллбэки - это функции, обещания это объекты</li>
+    <li>Коллбэки передаются в качестве аргументов из внешнего кода во внутренний, а обещания возвращаются из внутреннего кода во внешний</li>
+    <li>Коллбэки обрабатывают успешное или неуспешное завершение операции, обещания ничего не обрабатывают</li>
+    <li>Коллбэки могут обрабатывать несколько событий, обещания связаны только с одним событием</li>
+</ul>
+
+<h2>Создание</h2>
+Промис создается как экземпляр класса Promise, который принимает функцию (executor) в качестве аргумента и сразу вызывает её, ещё до создания и возврата промиса.
+
+<code>
+    const promise = new Promise((resolve, reject) => {
+<br>  // Asynchronous operation
+<br> });
+</code>
+
+Функция executor оповещает экземпляр (промис), когда и как операция, с которой он связан, будет завершена. В ней можно выполнять любую асинхронную операцию, по завершении которой нужно вызвать resolve() при успешном выполнении (состояние fulfilled), или reject() при ошибке (состояние rejected). Значение возвращаемое этой функции игнорируется.
+
+<ul>
+    <li>resolve(value) - функция для вызова при успешной операции. Переданный ей аргумент будет значением выполненного промиса</li>
+    <li>reject(error) - функция для вызвова в случае ошибки. Переданный ей аргумент будет значением отклоненного промиса</li>
+</ul>
+
+<img src="../img/creating-promise.png" alt="Creating promise" width="100%">
+
+<code>
+<br>    // Change value of isSuccess variable to call resolve or reject
+<br>const isSuccess = true;
+<br>
+<br>const promise = new Promise((resolve, reject) => {
+<br>  setTimeout(() => {
+<br>    if (isSuccess) {
+ <br>     resolve("Success! Value passed to resolve function");
+ <br>   } else {
+<br>      reject("Error! Error passed to reject function");
+<br>    }
+<br>  }, 2000);
+<br>});
+</code>
+
+В переменную promise будет записан промис (объект) в состоянии pending, а через две секунды, после того как будет вызван resolve() или reject(), промис перейдет в состояние fulfilled или rejected и мы сможем его обработать.
+
+<h2>
+    Метод then()
+</h2>
+Код, которому надо сделать что-то асинхронно, создаёт обещание и возвращает его. Внешний код, получив обещание, навешивает на него обработчики. По завершении процесса асинхронный код переводит обещание в состояние fulfilled или rejected и автоматически вызываются обработчики во внешнем коде.
+
+После того как промис создан, его результат обрабатывается в callback-функциях. Код пишется так, как будто мы размышляем о том, что может произойти если промис выполнится или нет, не думая о временных рамках.
+
+Метод then() принимает два аргумента - callback-функции которые будут вызваны когда промис изменит своё состояние. Результат промиса, значение или ошибку, они получат как аргументы.
+
+<code>
+    promise.then(onResolve, onReject)
+</code>
+
+<ul>
+    <li> <span>onResolve(value)</span> - будет вызвана при успешном выполнении промиса и получит его результат как аргумент.
+</li>
+    <li><span>onReject(error)</span> - будет вызвана при выполнении промиса с ошибкой и получит её как аргумент.
+</li>
+</ul>
+
+<img src="../img/method-then.png" alt="Method then" width="100%">
+
+В примере, callback-функция onResolve будет вызвана через две секунды если обещание выполнится успешно, а<span> onReject</span> вызовется через две секунды в том случае, если обещание выполнится с ошибкой.
+
+<code>
+    // Change value of isSuccess variable to call resolve or reject
+<br> const isSuccess = true;
+<br> 
+<br> const promise = new Promise((resolve, reject) => {
+<br>   setTimeout(() => {
+<br>     if (isSuccess) {
+<br>       resolve("Success! Value passed to resolve function");
+<br>     } else {
+<br>       reject("Error! Error passed to reject function");
+<br>     }
+<br>   }, 2000);
+<br> });
+<br> 
+<br> // Will run first
+<br> console.log("Before promise.then()");
+<br> 
+<br> // Registering promise callbacks
+<br> promise.then(
+<br>   // onResolve will run third or not at all
+<br>   value => {
+<br>     console.log("onResolve call inside promise.then()");
+<br>     console.log(value); // "Success! Value passed to resolve function"
+<br>   },
+<br>   // onReject will run third or not at all
+<br>  error => {
+<br>     console.log("onReject call inside promise.then()");
+<br>     console.log(error); // "Error! Error passed to reject function"
+<br>   }
+<br> );
+<br> 
+<br> // Will run second
+<br> console.log("After promise.then()");
+</code>
+
+<h4>ИНТЕРЕСНО
+Если фукнции onResolve и onReject содержат сложную логику, их, для удобства, объявляют как внешние функции и передают в метод then() по имени.
+</h4>
+
+<h2>Метод catch()</h2>
+На практике в методе <span>then()</span> обрабатывают только успешное выполнение промиса, 
+а ошибку его выполнения в специальном методе <span>catch()</span> для «отлова» ошибок.
+
+ <img src="../img/method-catch.png" alt="Method catch" width="100%">
+
+<code>
+<br>promise.catch(error => {
+<br>  // Promise rejected
+<br>});
+</code>
+
+Коллбек-функция будет вызвана при выполнении промиса с ошибкой, и получит её как аргумент.
+
+<code>
+    // Change value of isSuccess variable to call resolve or reject
+<br>const isSuccess = true;
+<br> 
+<br> const promise = new Promise((resolve, reject) => {
+<br>   setTimeout(() => {
+<br>     if (isSuccess) {
+<br>       resolve("Success! Value passed to resolve function");
+<br>     } else {
+<br>       reject("Error! Error passed to reject function");
+<br>     }
+<br>   }, 2000);
+<br> });
+<br> 
+<br> promise
+<br>   .then(value => {
+<br>     console.log(value);
+<br>   })
+<br>   .catch(error => {
+<br>     console.log(error);
+<br>   });
+</code>
+
+<h2>Метод finally()</h2>
+Этот метод может быть полезен если необходимо выполнить код после того, как обещание будет разрешено ( <span>fulfilled или rejected</span> ), независимо от результата. Позволяет избежать дублирования кода в обработчиках <span>then() и catch()</span>.
+ 
+<img src="../img/method-finally.png" alt=" Method finally" width="100%">
+
+<code>
+<br> promise.finally(() => {
+<br>   // Promise fulfilled or rejected
+<br> });
+</code>
+
+Коллбэк-функция не получит никаких аргументов, поскольку нельзя определить выполнено ли обещание или отклонено. Тут будет выполняться код, который необходимо запустить в любом случае.
+
+<code>
+    // Change value of isSuccess variable to call resolve or reject
+<br> const isSuccess = true;
+<br> 
+<br> const promise = new Promise((resolve, reject) => {
+<br>   setTimeout(() => {
+<br>     if (isSuccess) {
+<br>       resolve("Success! Value passed to resolve function");
+<br>     } else {
+<br>       reject("Error! Error passed to reject function");
+<br>     }
+<br>   }, 2000);
+<br> });
+<br> 
+<br> promise
+<br>   .then(value => console.log(value)) // "Success! Value passed to resolve function"
+<br>   .catch(error => console.log(error)) // "Error! Error passed to reject function"
+<br>   .finally(() => console.log("Promise settled")); // "Promise settled"
+</code>
+
+<h2>Цепочки промисов</h2>
+
+Метод <span>then()</span> результатом своего выполнения возвращает еще один промис, значением которого будет то, что вернет его callback-функция onResolve. Это позволяет строить асинхронные цепочки из промисов.
+
+<img src="../img/promise-chain.png" alt="Promise chain" width="100%">
+
+Так как метод <span>then()</span> возвращает промис, до его выполнения может пройти некоторое время, поэтому оставшаяся часть цепочки будет ждать. При возникновении ошибки в любом месте цепочки, выполнение всех последующих<span> then()</span> отменяется, а управление передается методу <span>catch()</span>. Поэтому он находится в конце цепочки промисов.
+
+<code>
+    const promise = new Promise((resolve, reject) => {
+<br>   setTimeout(() => {
+<br>     resolve(5);
+<br>   }, 2000);
+<br> });
+<br> 
+<br> promise
+<br>   .then(value => {
+<br>     console.log(value); // 5
+<br>     return value * 2;
+<br>   })
+<br>   .then(value => {
+<br>     console.log(value); // 10
+<br>     return value * 3;
+<br>   })
+<br>   .then(value => {
+<br>     console.log(value); // 30
+<br>   })
+<br>   .catch(error => {
+<br>     console.log(error);
+<br>   })
+<br>   .finally(() => {
+<br>     console.log("Final task");
+<br>   });
+</code>
+
+Промисификация функций
+Представим что у нас есть асинхронная функция которая выполянет какую-то асинхронную операцию, например запрос на сервер. Для того чтобы обработать результат, её придётся спроектировать так, что она будет ожидать два коллбэка - для успешного запроса и для ошибки.
+
+<code>
+    const fetchUserFromServer = (username, onSuccess, onError) => {
+<br>  console.log(`Fetching data for ${username}`);
+<br>
+<br>  setTimeout(() => {
+<br>    // Change value of isSuccess variable to simulate request status
+ <br>   const isSuccess = true;
+<br>
+<br>    if (isSuccess) {
+<br>      onSuccess("success value");
+<br>    } else {
+<br>      onError("error");
+<br>    }
+<br>  }, 2000);
+<br>};
+<br>
+<br>const onFetchSuccess = user => {
+<br>  console.log(user);
+<br>};
+<br>
+<br>const onFetchError = error => {
+<br>  console.error(error);
+<br>};
+<br>
+<br>fetchUserFromServer("Mango", onFetchSuccess, onFetchError);
+</code>
+
+Сейчас функция fetchUserFromServer() знает слишком много о том коде, который будет использовать результат её работы. Она ожидает коллбэки и отвечает за их вызов при определённых условиях. То есть, мы передаём что-то внутрь функции (коллбэки) и надеемся что оно отработает правильно - это не хорошо.
+
+Лучше если функция не заботится о том коде, который будет использовать её результат. Она просто выполняет какую-то операцию и возвращает результат своей работы во внешний код. Для того чтобы вернуть результат асинхронной операции, из функции необходимо вернуть промис. Промисификация - это преобразование функции с колбеками так, чтобы она не принимала коллбэки, а возвращала промис.
+
+<code>
+    const fetchUserFromServer = username => {
+<br>  return new Promise((resolve, reject) => {
+<br>    console.log(`Fetching data for ${username}`);
+<br>
+<br>    setTimeout(() => {
+<br>      // Change value of isSuccess variable to simulate request status
+<br>      const isSuccess = true;
+<br>
+<br>      if (isSuccess) {
+<br>        resolve("success value");
+<br>      } else {
+<br>        reject("error");
+<br>      }
+<br>    }, 2000);
+<br>  });
+<br>};
+<br>
+<br>fetchUserFromServer("Mango")
+<br>  .then(user => console.log(user))
+<br>  .catch(error => console.error(error));
+</code>
+
+<h4>
+    ИНТЕРЕСНО
+Большинство современных библиотек основаны на промисах. При вызове метода для асинхронной операции его результат доступен как промис к которому можно прицепить обработчики в методах then() и catch().
+
+</h4>
+</p>
+    </section>
+</body>
+</html>
