@@ -18,10 +18,13 @@ code{
 
 h4{
     padding: 10px;
-    margin: 15px;
+    margin: 10px;
     outline: 1px solid rgb(175, 164, 164);
     border-radius: 10px;
     background-color: rgba(218, 243, 218, 0.353);
+    font-size: 15px;
+    letter-spacing: 1px;
+    line-height: 18px;
 }
 
 h3{
@@ -33,8 +36,8 @@ h3{
 }
 
 ul{
-    background-color: rgba(244, 244, 244, 0.32);
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.041);
+    background-color: rgba(244, 244, 244, 0.574);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.152);
     border-radius: 5px;
 }
 
@@ -44,4 +47,10 @@ li{
 
 img{
     margin: 10px;
+}
+
+span{
+    padding: 3px 10px;
+    border-radius: 5px;
+    background-color: rgba(0,0,0,.1);
 }
