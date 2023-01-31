@@ -25,30 +25,31 @@
 <code>
   element.addEventListener(event, handler, options);
 </code>
-<br><br>
-event - имя события, строка, например "click".<br>
-handler - коллбэк-функция которая будет вызвана при наступлении события.<br>
-options - необязательный объект параметров с расширенными настройками.<br>
-const button = document.querySelector(".my-button");<br>
-<br>
-<code>button.addEventListener("click", () => {
+
+<ul>
+    <li>event - имя события, строка, например "click"</li>
+    <li>handler - коллбэк-функция которая будет вызвана при наступлении события</li>
+    <li>options - необязательный объект параметров с расширенными настройками</li>
+</ul>
+
+<code>
+    button = document.querySelector(".my-button");
+ <br>   button.addEventListener("click", () => {
  <br> console.log("Button was clicked");
 });</code>
-<br>
+
 Для коллбэка можно (и желательно) использовать отдельную функцию и передавать на неё ссылку. Именованная функция повышает читаемость кода.
-<br><br>
-<code>const button = document.querySelector(".my-button");</code>
 <br>
+
 <code>
-  const handleClick = () => {
+    const button = document.querySelector(".my-button");
+ <br> const handleClick = () => {
  <br> console.log("Button was clicked");
+<br> button.addEventListener("click", handleClick);
 };
 </code>
-<br>
-<code>button.addEventListener("click", handleClick);</code>
-<br>
-На одном элементе может быть сколько угодно обработчиков событий, даже событий одного типа. Коллбэк-функции будут вызываться в порядке регистрации их в коде.
 
+На одном элементе может быть сколько угодно обработчиков событий, даже событий одного типа. Коллбэк-функции будут вызываться в порядке регистрации их в коде.
 
 <h2>Метод removeEventListener()</h2>
 
@@ -62,8 +63,8 @@ const button = document.querySelector(".my-button");<br>
 <h2>Ключевое слово this</h2>
 
 Если коллбэком будет функция которая использует this, по умолчанию контекст внутри неё будет ссылаться на DOM-элемент на котором висит слушатель.
-        </p>
-    </section>
+</p>
+</section>
 
 </body>
 </html>
