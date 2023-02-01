@@ -14,50 +14,63 @@
         <p>
           Есть массив объектов с именами, баллами и посещаемыми предметами каждого студента.
 
-const students = [
-  { name: "Манго", score: 83, courses: ["математика", "физика"] },
-  { name: "Поли", score: 59, courses: ["информатика", "математика"] },
-  { name: "Аякс", score: 37, courses: ["физика", "биология"] },
-  { name: "Киви", score: 94, courses: ["литература", "информатика"] },
-];
+<code>
+  const students = [
+ <br> { name: "Манго", score: 83, courses: ["математика", "физика"] },
+<br>  { name: "Поли", score: 59, courses: ["информатика", "математика"] },
+<br>  { name: "Аякс", score: 37, courses: ["физика", "биология"] },
+<br>  { name: "Киви", score: 94, courses: ["литература", "информатика"] },
+<br>];
+</code>
 
 
-Необходимо получить массив их имён отсортированный по возрастанию баллов за тест. Для этого мы отсортируем копию массива методом sort(), после чего методом map() составим массив значений свойства name из сортированного массива.
+Необходимо получить массив их имён отсортированный по возрастанию баллов за тест. Для этого мы отсортируем копию массива методом sort(), после чего методом <span>map()</span> составим массив значений свойства name из сортированного массива.
 
-const sortedByAscendingScore = [...students].sort((a, b) => a.score - b.score);
-const names = sortedByAscendingScore.map(student => student.name);
-
-console.log(names); // ['Аякс', 'Поли', 'Манго', 'Киви']
-
+<code>
+  const sortedByAscendingScore = [...students].sort((a, b) => a.score - b.score);
+<br>const names = sortedByAscendingScore.map(student => student.name);
+<br>
+<br>console.log(names); // ['Аякс', 'Поли', 'Манго', 'Киви']
+</code>
 
 Проблема в том, что у нас появляются промежуточные переменные после каждой операции кроме финальной. Переменная sortedByAscendingScore лишняя и необходима только для хранения промежуточного результата.
 
 Избавиться от таких «мёртвых» переменных можно группируя вызовы методов в цепочки. Каждый следующий метод будет выполняться на результате работы предыдущего.
 
-const names = [...students]
-  .sort((a, b) => a.score - b.score)
-  .map(student => student.name);
+<code>
+  const names = [...students]
+<br>  .sort((a, b) => a.score - b.score)
+<br>  .map(student => student.name);
+<br>
+<br>console.log(names); // ['Аякс', 'Поли', 'Манго', 'Киви']
+</code>
+ 
+<ol>
+  <li>Делаем копию исходного массива перед сортировкой.</li>
+  <li>На копии вызываем метод <span>sort()</span>.</li>
+  <li>К результату работы метода <span>sort()</span> применяем метод <span>map()</span>.</li>
+  <li>Переменной names присваивается результат работы метода <span>map()</span>.</li>
+</ol>
 
-console.log(names); // ['Аякс', 'Поли', 'Манго', 'Киви']
-
-Делаем копию исходного массива перед сортировкой.
-На копии вызываем метод sort().
-К результату работы метода sort() применяем метод map().
-Переменной names присваивается результат работы метода map().
 Получим сортированный по алфавиту массив уникальных посещаемых предметов.
 
-const uniqueSortedCourses = students
-  .flatMap(student => student.courses)
-  .filter((course, index, array) => array.indexOf(course) === index)
-  .sort((a, b) => a.localeCompare(b));
+<code>
+  const uniqueSortedCourses = students
+<br>  .flatMap(student => student.courses)
+<br>  .filter((course, index, array) => array.indexOf(course) === index)
+ <br> .sort((a, b) => a.localeCompare(b));
+<br>
+<br>console.log(uniqueSortedCourses); // ['биология', 'информатика', 'литература', 'математика', 'физика']
 
-console.log(uniqueSortedCourses); // ['биология', 'информатика', 'литература', 'математика', 'физика']
+</code>
+<br>
+<ol>
+  <li>На исходном массиве вызываем <span>flatMap()</span> и делаем разглаженный массив всех курсов.</li>
+  <li>К результату метода flatMap() применяем метод <span>filter()</span> для фильтрации уникальных элементов.</li>
+  <li>На результате метода <span>filter()</span> вызываем <span>sort()</span>.</li>
+  <li>Переменной uniqueSortedCourses присваивается результат работы метода <span>sort()</span>.</li>
+</ol>
 
-
-На исходном массиве вызываем flatMap() и делаем разглаженный массив всех курсов.
-К результату метода flatMap() применяем метод filter() для фильтрации уникальных элементов.
-На результате метода filter() вызываем sort().
-Переменной uniqueSortedCourses присваивается результат работы метода sort().
 Цепочка методов может быть произвольной длины, но обычно не более 2-3 операций. Во-первых, перебирающие методы используются для сравнительно простых операций над коллекцией. Во-вторых, вызов каждого последующего метода, это дополнительный перебор массива, что при достаточном количестве, может сказаться на производительности.
         </p>
     </section>

@@ -12,43 +12,47 @@
         <a href="../8_methods.html"><<назад</a>
         <h1>Чистые функции</h1>
         <p>
-          Функция с побочными эффектами - это функция которая в процессе выполнения может изменять или использовать глобальные переменные, изменять значение аргументов ссылочного типа, выполнять операции ввода-вывода и т. п.
+        Функция с побочными эффектами - это функция которая в процессе выполнения может изменять или использовать глобальные переменные, изменять значение аргументов ссылочного типа, выполнять операции ввода-вывода и т. п.
 
-const dirtyMultiply = (array, value) => {
-  for (let i = 0; i < array.length; i += 1) {
-    array[i] = array[i] * value;
-  }
-};
-
-const numbers = [1, 2, 3, 4, 5];
-dirtyMultiply(numbers, 2);
-// Произошла мутация исходных данных - массива numbers
-console.log(numbers); // [2, 4, 6, 8, 10]
+<code>
+  const dirtyMultiply = (array, value) => {
+<br>  for (let i = 0; i < array.length; i += 1) {
+<br>   array[i] = array[i] * value;
+<br>  }
+<br>};
+<br>
+<br>const numbers = [1, 2, 3, 4, 5];
+<br>dirtyMultiply(numbers, 2);
+<br><br>// Произошла мутация исходных данных - массива numbers
+<br>console.log(numbers); // [2, 4, 6, 8, 10]
+</code>
 
 Функция dirtyMultiply(array, value) умножает каждый элемент массива array на число value. Она изменяет (мутирует) исходный массив по ссылке.
-
+<br><br>
 Чистая функция (pure function) - это функция результат которой зависит только от значений переданных аргументов. При одинаковых аргументах она всегда возвращает один и тот же результат и не имеет побочных эффектов, то есть не изменяет значения аргументов.
-
+<br><br>
 Напишем реализацию чистой функции умножения элементов массива, возвращающей новый массив, не изменяя исходный.
 
-const pureMultiply = (array, value) => {
-  const newArray = [];
-
-  array.forEach(element => {
-    newArray.push(element * value);
-  });
-
-  return newArray;
-};
-
-const numbers = [1, 2, 3, 4, 5];
-const doubledNumbers = pureMultiply(numbers, 2);
-
-// Не произошло мутации исходных данных
-console.log(numbers); // [1, 2, 3, 4, 5]
-// Функция вернула новый массив с изменёнными данными
-console.log(doubledNumbers); // [2, 4, 6, 8, 10]
-        </p>
+<code>
+<br>   const pureMultiply = (array, value) => {
+<br>   const newArray = [];
+<br> 
+<br>   array.forEach(element => {
+<br>     newArray.push(element * value);
+<br>   });
+<br> 
+<br>   return newArray;
+<br> };
+<br> 
+<br> const numbers = [1, 2, 3, 4, 5];
+<br> const doubledNumbers = pureMultiply(numbers, 2);
+<br> 
+<br> // Не произошло мутации исходных данных
+<br> console.log(numbers); // [1, 2, 3, 4, 5]
+<br><br> // Функция вернула новый массив с изменёнными данными
+<br> console.log(doubledNumbers); // [2, 4, 6, 8, 10]
+</code>
+      </p>
     </section>
 </body>
 </html>

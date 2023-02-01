@@ -12,30 +12,39 @@
         <a href="../8_methods.html"><<назад</a>
         <h1>Метод find()</h1>
         <p>
-          Если метод filter(callback) используется для поиска всех элементов удовлетворяющим условию, то метод find(callback) позволяет найти и вернуть первый подходящий элемент, после чего перебор массива прекращается. То есть он ищет до первого совпадения.
+          Если метод <span>filter(callback)</span> используется для поиска всех элементов удовлетворяющим условию, то метод find(callback) позволяет найти и вернуть первый подходящий элемент, после чего перебор массива прекращается. То есть он ищет до первого совпадения.
 
-массив.find((element, index, array) => {
-  // Тело коллбек-функции
-});
+<code>
+  массив.find((element, index, array) => {
+<br>  // Тело коллбек-функции
+<br> });
+</code>
 
-Не изменяет оригинальный массив.
-Поэлементно перебирает оригинальный массив.
-Возвращает первый элемент удовлетворяющий условию, то есть когда коллбек возвращает true.
-Если ни один элемент не подошёл, то есть для всех элементов коллбек вернул false, метод возвращает undefined.
-Метод find() используется для одной задачи - поиска элемента по уникальному значению свойства. Например, поиск пользователя по почте, автомобиля по серийному номеру, книги по названию и т. п.
+<ul>
+  <li>Не изменяет оригинальный массив</li>
+  <li>Поэлементно перебирает оригинальный массив</li>
+  <li>Возвращает первый элемент удовлетворяющий условию, то есть когда коллбек возвращает true</li>
+  <li>Если ни один элемент не подошёл, то есть для всех элементов коллбек вернул false, метод возвращает undefined</li>
+</ul>
 
-const colorPickerOptions = [
-  { label: "red", color: "#F44336" },
-  { label: "green", color: "#4CAF50" },
-  { label: "blue", color: "#2196F3" },
-  { label: "pink", color: "#E91E63" },
-  { label: "indigo", color: "#3F51B5" },
-];
+Метод <span>find()</span> используется для одной задачи - поиска элемента по уникальному значению свойства. Например, поиск пользователя по почте, автомобиля по серийному номеру, книги по названию и т. п.
 
-colorPickerOptions.find(option => option.label === "blue"); // { label: 'blue', color: '#2196F3' }
-colorPickerOptions.find(option => option.label === "pink"); // { label: 'pink', color: '#E91E63' }
-colorPickerOptions.find(option => option.label === "white"); // undefined
-        </p>
+<code>
+  const colorPickerOptions = [
+<br>   { label: "red", color: "#F44336" },
+<br>   { label: "green", color: "#4CAF50" },
+<br>   { label: "blue", color: "#2196F3" },
+<br>   { label: "pink", color: "#E91E63" },
+<br>   { label: "indigo", color: "#3F51B5" },
+<br> ];
+<br> 
+<br> colorPickerOptions.find(option => option.label === "blue"); // { label: 'blue', color: '#2196F3' }
+<br> colorPickerOptions.find(option => option.label === "pink"); // { label: 'pink', color: '#E91E63' }
+<br> colorPickerOptions.find(option => option.label === "white"); // undefined
+</code>
+
+  
+</p>
     </section>
 </body>
 </html>
