@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тернарный оператор</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <section>
+        <a href="../2_branch_loops.html"><<назад</a>
+        <h1>Тернарный оператор</h1>
+        <p>
+Тернарный оператор используется как более синтаксически краткая замена инструкции if...else, когда одной и той же переменной необходимо присвоить разные значения по условию.
+
+<условие> ? <выражение_если_условие_истинно> : <выражение_если_условие_ложно>
+
+
+Работает по такой схеме:
+
+Вычисляется условие.
+Если условие истинно, то есть приводится к true, вычисляется выражение после ?.
+Если условие ложно, то есть приводится к false, вычисляется выражение после :.
+Значение вычисленного выражения возвращается как результат работы тернарного оператора.
+let type;
+const age = 20;
+
+if (age >= 18) {
+  type = "adult";
+} else {
+  type = "child";
+}
+
+console.log(type); // "adult"
+
+Выполним рефакторинг заменив if...else тернарным оператором.
+
+const age = 20;
+const type = age >= 18 ? "adult" : "child";
+console.log(type); // "adult"
+
+Запишем операцию поиска большего числа.
+
+const num1 = 5;
+const num2 = 10;
+let biggerNumber;
+
+if (num1 > num2) {
+  biggerNumber = num1;
+} else {
+  biggerNumber = num2;
+}
+
+console.log(biggerNumber); // 10
+
+Код работает верно, получаем большее число из двух, но это решение кажется слишком громоздким, учитывая, насколько проста проблема. Используем тернарный оператор.
+
+const num1 = 5;
+const num2 = 10;
+const biggerNumber = num1 > num2 ? num1 : num2;
+
+console.log(biggerNumber); // 10
+
+ИНТЕРЕСНО
+Тернарный оператор должен использоваться в простых операциях присваивания или возврата. Его использование для описания сложных ветвлений - плохая практика (антипаттерн).
+        </p>
+    </section>
+</body>
+</html>

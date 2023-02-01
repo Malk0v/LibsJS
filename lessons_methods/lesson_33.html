@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чистые функции</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <section>
+        <a href="../8_methods.html"><<назад</a>
+        <h1>Чистые функции</h1>
+        <p>
+          Функция с побочными эффектами - это функция которая в процессе выполнения может изменять или использовать глобальные переменные, изменять значение аргументов ссылочного типа, выполнять операции ввода-вывода и т. п.
+
+const dirtyMultiply = (array, value) => {
+  for (let i = 0; i < array.length; i += 1) {
+    array[i] = array[i] * value;
+  }
+};
+
+const numbers = [1, 2, 3, 4, 5];
+dirtyMultiply(numbers, 2);
+// Произошла мутация исходных данных - массива numbers
+console.log(numbers); // [2, 4, 6, 8, 10]
+
+Функция dirtyMultiply(array, value) умножает каждый элемент массива array на число value. Она изменяет (мутирует) исходный массив по ссылке.
+
+Чистая функция (pure function) - это функция результат которой зависит только от значений переданных аргументов. При одинаковых аргументах она всегда возвращает один и тот же результат и не имеет побочных эффектов, то есть не изменяет значения аргументов.
+
+Напишем реализацию чистой функции умножения элементов массива, возвращающей новый массив, не изменяя исходный.
+
+const pureMultiply = (array, value) => {
+  const newArray = [];
+
+  array.forEach(element => {
+    newArray.push(element * value);
+  });
+
+  return newArray;
+};
+
+const numbers = [1, 2, 3, 4, 5];
+const doubledNumbers = pureMultiply(numbers, 2);
+
+// Не произошло мутации исходных данных
+console.log(numbers); // [1, 2, 3, 4, 5]
+// Функция вернула новый массив с изменёнными данными
+console.log(doubledNumbers); // [2, 4, 6, 8, 10]
+        </p>
+    </section>
+</body>
+</html>
