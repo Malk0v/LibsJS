@@ -14,52 +14,75 @@
         <p>
           Разберем базовые операции ввода/вывода, достаточные для получения и отображения данных от пользователя, до того как научимся работать с HTML-документом.
 
-Вывод данных
+<h2>
+    Вывод данных
+</h2>
+
 Для вывода данных есть два метода: console.log() и alert(). В круглых скобках указываем имя переменной, значение которой необходимо вывести.
 
-const message = "JavaScript is awesome!";
-console.log(message); // JavaScript is awesome!
+<code>
+    const message = "JavaScript is awesome!";
+<br> console.log(message); // JavaScript is awesome!
+</code>
 
 Можно сначала указать какую-то описательную строку, после чего поставить запятую и указать имя переменной.
 
-const username = "Mango";
-console.log("Username is ", username); // Username is Mango
+<code>
+    const username = "Mango";
+<br> console.log("Username is ", username); // Username is Mango
+</code>
 
 
-Метод alert() выводит модальное окно, текст которого соответствует значению переменной (или литерала) которую передадим в скобках.
+Метод <span>alert()</span> выводит модальное окно, текст которого соответствует значению переменной (или литерала) которую передадим в скобках.
 
-const message = "JavaScript is awesome!";
-alert(message);
+<code>
+    const message = "JavaScript is awesome!";
+<br> alert(message);
+</code>
 
-ИНТЕРЕСНО
+<h4>
+    ИНТЕРЕСНО
 console и alert являются частью интерфейса window - глобального объекта, доступного при исполнении скрипта на веб-странице. Запись window.alert() избыточна, пишем просто alert() или console.log(). Детальнее об этом будем говорить дальше в курсе.
 
-Going beyond console.log()
+</h4>
 
-Получение данных
-Для получения данных от пользователя есть prompt() и confirm(). Это тоже методы из интерфейса window. Результатом своего выполнения они возвращают то, что было введено пользователем, поэтому результат их работы можно записать в переменную для дальнейшего использования.
+<a href="https://medium.com/free-code-camp/how-to-use-the-javascript-console-going-beyond-console-log-5128af9d573b">Going beyond console.log()</a>
 
-confirm() - выводит модальное окно с сообщением, и две кнопки, Ok и Cancel. При нажатии на Ok, результатом будет true, при нажатии на Cancel - возвращается false.
+<h2>
+    Получение данных
+</h2>
 
-// Просим клиента подтвердить бронь на отель
-// и сохраняем в переменную результат работы confirm
-const isComing = confirm("Please confirm hotel reservation");
-console.log(isComing);
+Для получения данных от пользователя есть <span>prompt() и confirm()</span>. Это тоже методы из интерфейса window. Результатом своего выполнения они возвращают то, что было введено пользователем, поэтому результат их работы можно записать в переменную для дальнейшего использования.
+<br><br>
+<span>
+    confirm()
+</span> - выводит модальное окно с сообщением, и две кнопки, Ok и Cancel. При нажатии на Ok, результатом будет true, при нажатии на Cancel - возвращается false.
+
+<code>
+    // Просим клиента подтвердить бронь на отель
+<br> // и сохраняем в переменную результат работы confirm
+<br> const isComing = confirm("Please confirm hotel reservation");
+<br> console.log(isComing);
+</code>
 
 
-prompt() - выводит модальное окно с полем ввода и кнопками Ok и Cancel. При нажатии Ok, результатом будет то, что ввел пользователь, при Cancel - возвращается null.
+<span>prompt()</span> - выводит модальное окно с полем ввода и кнопками Ok и Cancel. При нажатии Ok, результатом будет то, что ввел пользователь, при Cancel - возвращается null.
 
-// Спрашиваем имя отеля в котором хотел бы остановится клиент
-// и сохраняем в переменную результат вызова prompt.
-const hotelName = prompt("Please enter desired hotel name");
-console.log(hotelName);
+<code>
+    // Спрашиваем имя отеля в котором хотел бы остановится клиент
+<br> // и сохраняем в переменную результат вызова prompt.
+<br> const hotelName = prompt("Please enter desired hotel name");
+<br> console.log(hotelName);
+</code>
 
 
 Важная особенность prompt в том, что не зависимо что ввел пользователь, всегда вернется строка. То есть, если пользователь ввел 5, то вернется не число 5, а строка "5".
 
-const value = prompt("Please enter a number!");
-console.log(typeof value); // "string"
-console.log(value); // "5"
+<code>
+    const value = prompt("Please enter a number!");
+<br> console.log(typeof value); // "string"
+<br> console.log(value); // "5"
+</code>
         </p>
     </section>
 </body>
