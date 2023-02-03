@@ -14,140 +14,191 @@
         <p>
             Строка - это индексированный набор из нуля или более символов, заключенных в одинарные либо двойные кавычки.
 
-const username = "Mango";
+<code>
+    const username = "Mango";
+</code>
 
 Важно помнить, что индексация элементов строки начинается с нуля. К примеру в строке "JavaScript" буква "J" стоит на позиции с индексом 0, а "t" идет под индексом 9.
-
-string indexing
+<br><br>
 Содержимое строки нельзя изменить, только прочитать. То есть нельзя взять какой-то символ и заменить его, как только строка создана - она такая навсегда. Можно лишь создать целиком новую строку и присвоить в переменную вместо старой.
 
-Конкатенация строк
+<h2>
+    Конкатенация строк
+</h2>
+
 Если применить оператор + к строке и любому другому типу данных, результатом операции «сложения» будет строка. Эта операция называется конкатенация, или сложение строк.
-
+<br><br>
 Во время конкатенации, любой тип данных приводится к строке и сшивается со строкой, но есть особенность - последовательность записи операндов.
-
+<br><br>
 Последовательность операций имеет значение, преобразование типов происходит только в момент операции сложения со строкой, до этого момента действуют привычные правила математики.
 
-const message = "Mango " + "is" + " happy";
-console.log(message); // Mango is happy
-
-Посмотрим на разный порядок операндов.
-
-console.log(1 + "2"); // "12"
-console.log(1 + "2" + 4); // "124"
-console.log(1 + 2 + "4"); // "34"
+<code>
+    const message = "Mango " + "is" + " happy";
+<br> console.log(message); // Mango is happy
+<br> 
+<br> Посмотрим на разный порядок операндов.
+<br> 
+<br> console.log(1 + "2"); // "12"
+<br> console.log(1 + "2" + 4); // "124"
+<br> console.log(1 + 2 + "4"); // "34"
+</code>
 
 В последнем примере произошла математическая операция сложения для первых двух чисел 1 и 2, после чего число 3 было преобразовано в строку "3" и сшито со строкой "4".
 
-Шаблонные строки
+<h2>
+    Шаблонные строки
+</h2>
 Шаблонные строки это альтернатива конкатенации с более удобным синтаксисом. Шаблонная строка заключена в обратные (косые) кавычки вместо двойных или одинарных и может содержать местозаполнители, которые обозначаются знаком доллара и фигурными скобками - ${выражение}.
 
-// Используя переменные необходимо составить строку с подставленными значениями
-const guestName = "Манго";
-const roomNumber = 207;
-const greeting =
-  "Welcome " + guestName + ", your room number is " + roomNumber + "!";
-console.log(greeting); // "Welcome Mango, your room number is 207!"
+<code>
+    // Используя переменные необходимо составить строку с подставленными значениями
+<br> const guestName = "Манго";
+<br> const roomNumber = 207;
+<br> const greeting =
+<br>   "Welcome " + guestName + ", your room number is " + roomNumber + "!";
+<br> console.log(greeting); // "Welcome Mango, your room number is 207!"
 
+</code>
 
 Составлять строки с подставляемыми значениями используя конкатенацию очень неудобно. На помощь приходят шаблонные строки и интерполяция.
 
-const guestName = "Манго";
-const roomNumber = 207;
-const greeting = `Welcome ${guestName}, your room number is ${roomNumber}!`;
-console.log(greeting); // "Welcome Mango, your room number is 207!"
+<code>
+    const guestName = "Манго";
+<br> const roomNumber = 207;
+<br> const greeting = `Welcome ${guestName}, your room number is ${roomNumber}!`;
+<br> console.log(greeting); // "Welcome Mango, your room number is 207!"
 
+</code>
 
-Свойства и методы строк
+<h2>
+    Свойства и методы строк
+</h2>
+
 У каждой строки есть встроенные свойства и методы, рассмотрим некоторые из них.
 
-Свойство length
+<h2>
+    Свойство length
+</h2>
 Для того чтобы узнать длину строки, то есть количество её символов, у всех строк есть встроенное свойство length, значение которого можно получить обратившись к нему через точку после имени переменной или строкового литерала.
 
-const message = "Welcome to Bahamas!";
-console.log(message.length); // 19
-console.log("There is nothing impossible to him who will try".length); // 47
+<code>
+    const message = "Welcome to Bahamas!";
+<br> console.log(message.length); // 19
+<br> console.log("There is nothing impossible to him who will try".length); // 47
 
+</code>
 
-Методы toLowerCase() и toUpperCase()
+<h2>
+    Методы toLowerCase() и toUpperCase()
+</h2>
 Возвращают новую строку в соответствующем регистре, не изменяя оригинальную строку.
 
-const message = "Welcome to Bahamas!";
-console.log(message.toLowerCase()); // "welcome to bahamas!"
-console.log(message.toUpperCase()); // "WELCOME TO BAHAMAS!"
-console.log(message); // "Welcome to Bahamas!"
+<code>
+    const message = "Welcome to Bahamas!";
+<br> console.log(message.toLowerCase()); // "welcome to bahamas!"
+<br> console.log(message.toUpperCase()); // "WELCOME TO BAHAMAS!"
+<br> console.log(message); // "Welcome to Bahamas!"
+</code>
 
 
 Бывают ситуации когда все символы в строке необходимо преобразовать в один регистр, верхний или нижний. Например, при поиске по ключевому слову, когда пользователь вводит строку 'saMsUng', а сравнить её надо со строкой 'samsung' или 'SAMSUNG'.
 
-console.log("saMsUng" === "samsung"); // false
-console.log("saMsUng" === "SAMSUNG"); // false
+<code>
+    console.log("saMsUng" === "samsung"); // false
+<br> console.log("saMsUng" === "SAMSUNG"); // false
+</code>
 
 Чтобы не требовать абсолютно точный ввод можно сделать «нормализацию» введённой пользователем строки, то есть преобразовать все её символы в верхний или нижний регистр. Методы строки toLowerCase() и toUpperCase() вернут новую строку в соответствующем регистре, не изменяя оригинальную.
 
-const BRAND_NAME = "SAMSUNG";
-const userInput = "saMsUng";
-const normalizedToUpperCaseInput = userInput.toUpperCase();
+<code>
+    const BRAND_NAME = "SAMSUNG";
+<br> const userInput = "saMsUng";
+<br> const normalizedToUpperCaseInput = userInput.toUpperCase();
+<br> 
+<br> console.log(userInput); // 'saMsUng'
+<br> console.log(userInput === BRAND_NAME); // false
+<br> console.log(normalizedToUpperCaseInput); // 'SAMSUNG'
+<br> console.log(normalizedToUpperCaseInput === BRAND_NAME); // true
+</code>
 
-console.log(userInput); // 'saMsUng'
-console.log(userInput === BRAND_NAME); // false
-console.log(normalizedToUpperCaseInput); // 'SAMSUNG'
-console.log(normalizedToUpperCaseInput === BRAND_NAME); // true
 
+<h2>
+    Метод indexOf()
+</h2>
 
-Метод indexOf()
 Возвращает позицию (индекс) на которой находится первое совпадение подстроки или -1, если ничего не найдено.
-
+ 
+<code>
 const message = "Welcome to Bahamas!";
-console.log(message.indexOf("to")); // 8
-console.log(message.indexOf("hello")); // -1
+<br> console.log(message.indexOf("to")); // 8
+<br> console.log(message.indexOf("hello")); // -1
+</code>
 
-Метод includes()
+<h2>
+    Метод includes()
+</h2>
 Проверяет входит ли подстрока в строку, возвращает буль - true если входит и false в противном случае. Регистр символов в строке и подстроке имеет значение, так как например буква "a" не равна букве "А".
 
-const productName = "Ремонтный дроид";
+<code>
+    const productName = "Ремонтный дроид";
+<br> 
+<br> console.log(productName.includes("н")); // true
+<br> console.log(productName.includes("Н")); // false
+<br> console.log(productName.includes("дроид")); // true
+<br> console.log(productName.includes("Дроид")); // false
+<br> console.log(productName.includes("Ремонтный")); // true
+<br> console.log(productName.includes("ремонтный")); // false
+</code>
 
-console.log(productName.includes("н")); // true
-console.log(productName.includes("Н")); // false
-console.log(productName.includes("дроид")); // true
-console.log(productName.includes("Дроид")); // false
-console.log(productName.includes("Ремонтный")); // true
-console.log(productName.includes("ремонтный")); // false
 
-
-ИНТЕРЕСНО
+<h4>
+    ИНТЕРЕСНО
 Все методы строк чувствительны к регистру.
+</h4>
 
-Метод endsWith()
+<h2>
+    Метод endsWith()
+</h2>
 Позволяет определить, заканчивается ли строка символами (подстрокой) указанными в скобках, возвращая true или false.
 
-const jsFileName = "script.js";
-console.log(jsFileName.endsWith(".js")); // true
+<code>
+    const jsFileName = "script.js";
+<br>console.log(jsFileName.endsWith(".js")); // true
+<br>
+<br>const cssFileName = "styles.css";
+<br>console.log(cssFileName.endsWith(".js")); // false
+</code>
 
-const cssFileName = "styles.css";
-console.log(cssFileName.endsWith(".js")); // false
+<h2>
+    Методы replace() и replaceAll()
+</h2>
 
-
-Методы replace() и replaceAll()
 Возвращают новую строку, в которой первое (replace) или все совпадения (replaceAll) подстроки заменены на указанное значение.
 
-const jsFileName = "script.js";
-const minifiedJsFileName = jsFileName.replace(".js", ".min.js");
-console.log(minifiedJsFileName); // "script.min.js"
+<code>
+    const jsFileName = "script.js";
+<br>const minifiedJsFileName = jsFileName.replace(".js", ".min.js");
+<br>console.log(minifiedJsFileName); // "script.min.js"
+<br>
+<br>const cssFileNames = "styles.css, about.css, portfolio.css";
+<br>const minifiedCssFileNames = cssFileNames.replaceAll(".css", ".min.css");
+<br>console.log(minifiedCssFileNames); // "styles.min.css, about.min.css, portfolio.min.css"
 
-const cssFileNames = "styles.css, about.css, portfolio.css";
-const minifiedCssFileNames = cssFileNames.replaceAll(".css", ".min.css");
-console.log(minifiedCssFileNames); // "styles.min.css, about.min.css, portfolio.min.css"
+</code>
 
+<h2>
+    Метод slice()
+</h2>
 
-Метод slice()
 Метод строк slice(startIndex, endIndex) используется для создания копии части или всей строки. Он делает копию элементов строки от startIndex и до, но не включая endIndex и возвращает новую строку, не изменяя оригинал.
 
-const productName = "Repair droid";
-console.log(productName.slice(0, 4)); // "Repa"
-console.log(productName.slice(3, 9)); // "air dr"
-console.log(productName.slice(0, productName.length)); // "Repair droid"
-console.log(productName.slice(7, productName.length)); // "droid"
+<code>
+    const productName = "Repair droid";
+<br> console.log(productName.slice(0, 4)); // "Repa"
+<br> console.log(productName.slice(3, 9)); // "air dr"
+<br> console.log(productName.slice(0, productName.length)); // "Repair droid"
+<br> console.log(productName.slice(7, productName.length)); // "droid"
+</code>
         </p>
     </section>
 </body>
