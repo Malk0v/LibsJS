@@ -15,89 +15,109 @@
 
             Цикл for можно использовать для итерации по массиву, то есть «перебрать» его поэлементно.
 
-const clients = ["Mango", "Ajax", "Poly"];
-
-for (let i = 0; i < clients.length; i += 1) {
-  console.log(clients[i]);
-}
+<code>
+  const clients = ["Mango", "Ajax", "Poly"];
+<br> 
+<br> for (let i = 0; i < clients.length; i += 1) {
+ <br>  console.log(clients[i]);
+<br> }
+</code>
 
 Для доступа к элементам используется синтаксис квадратных скобок массив[индекс], где индекс это значние счётчика цикла от 0 и до последнего индекса массива, то есть меньше, но не равно его длине.
 
-Цикл for...of
-Конструкция for...of объявляет цикл, перебирающий итерируемые объекты, такие как массивы и строки. Тело цикла будет выполняться для значения каждого элемента. Это хорошая замена циклу for если не нужен доступ к счётчику итерации.
+<h2>
+  Цикл for...of
+</h2>
+Конструкция <span>for...of </span> объявляет цикл, перебирающий итерируемые объекты, такие как массивы и строки. Тело цикла будет выполняться для значения каждого элемента. Это хорошая замена циклу for если не нужен доступ к счётчику итерации.
 
-for (const variable of iterable) {
-  // тело цикла
-}
+<code>
+  for (const variable of iterable) {
+<br>   // тело цикла
+<br> }
+</code>
 
-variable — переменная которая будет хранить значение элемента на каждой итерации.
-iterable — коллекция, которая имеет перечислимые элементы, например массив.
-const clients = ["Mango", "Ajax", "Poly"];
+<ul>
+  <li>variable — переменная которая будет хранить значение элемента на каждой итерации</li>
+  <li>iterable — коллекция, которая имеет перечислимые элементы, например массив</li>
+</ul>
 
-for (const client of clients) {
-  console.log(client);
-}
+<code>
+  const clients = ["Mango", "Ajax", "Poly"];
+<br> 
+<br> for (const client of clients) {
+<br>   console.log(client);
+<br> }
+<br> 
+<br> const string = "javascript";
+<br> 
+<br> for (const character of string) {
+<br>   console.log(character);
+<br> }
+</code>
 
-const string = "javascript";
+<h2>
+  Операторы break и continue
+</h2>
 
-for (const character of string) {
-  console.log(character);
-}
-
-Операторы break и continue
 Будем искать имя клиента в массиве имен, если нашли - прервем цикл, так как нет смысла искать дальше, имена у нас уникальные.
 
-const clients = ["Mango", "Poly", "Ajax"];
-const clientNameToFind = "Poly";
-let message;
-
-for (const client of clients) {
-  // На каждой итерации будем проверять совпадает ли элемент массива с
-  // именем клиента. Если совпадает то мы записываем в message сообщение
-  // об успехе и делаем break чтобы не искать дальше
-  if (client === clientNameToFind) {
-    message = "Клиент с таким именем есть в базе данных!";
-    break;
-  }
-
-  // Если они не совпадают то запишем в message сообщение об отсутствии имени
-  message = "Клиента с таким именем нету в базе данных!";
-}
-
-console.log(message); // "Клиент с таким именем есть в базе данных!"
+<code>
+  const clients = ["Mango", "Poly", "Ajax"];
+<br> const clientNameToFind = "Poly";
+<br> let message;
+<br> 
+<br> for (const client of clients) {
+<br>   // На каждой итерации будем проверять совпадает ли элемент массива с
+<br>   // именем клиента. Если совпадает то мы записываем в message сообщение
+<br>   // об успехе и делаем break чтобы не искать дальше
+<br>   if (client === clientNameToFind) {
+<br>     message = "Клиент с таким именем есть в базе данных!";
+ <br>    break;
+ <br>  }
+<br> 
+<br>   // Если они не совпадают то запишем в message сообщение об отсутствии имени
+<br>   message = "Клиента с таким именем нету в базе данных!";
+<br> }
+<br> 
+<br> console.log(message); // "Клиент с таким именем есть в базе данных!"
+</code>
 
 
 Можно изначально задать message значение неудачи поиска, а в цикле перезаписать его на успех, если нашли имя. Но break все равно пригодится, так как если у нас массив из 10000 клиентов, а нужный нам стоит на позиции 2, то нет абсолютно никакого смысла перебирать оставшиеся 9998 элементов.
 
-const clients = ["Mango", "Poly", "Ajax"];
-const clientNameToFind = "Poly";
-let message = "Клиента с таким именем нету в базе данных!";
-
-for (const client of clients) {
-  if (client === clientNameToFind) {
-    message = "Клиент с таким именем есть в базе данных!";
-    break;
-  }
-  // Если не совпадает, то на этой итерации ничего не делаем
-}
-
-console.log(message); // Клиент с таким именем есть в базе данных!
+<code>
+  const clients = ["Mango", "Poly", "Ajax"];
+<br> const clientNameToFind = "Poly";
+<br> let message = "Клиента с таким именем нету в базе данных!";
+<br> 
+<br> for (const client of clients) {
+<br>   if (client === clientNameToFind) {
+<br>     message = "Клиент с таким именем есть в базе данных!";
+<br>     break;
+<br>   }
+<br>   // Если не совпадает, то на этой итерации ничего не делаем
+<br> }
+<br> 
+<br> console.log(message); // Клиент с таким именем есть в базе данных!
+</code>
 
 
 Используем цикл для вывода только чисел больше определенного значения.
 
-const numbers = [1, 3, 14, 18, 4, 7, 29, 6, 34];
-const threshold = 15;
-
-// Для чисел меньше чем порог срабатывает continue, выполнение тела прекращается
-// и управление передаётся на следующую итерацию.
-for (let i = 0; i < numbers.length; i += 1) {
-  if (numbers[i] < threshold) {
-    continue;
-  }
-
-  console.log(`Число больше чем ${threshold}: ${numbers[i]}`); // 18, 29, 34
-}
+<code>
+  const numbers = [1, 3, 14, 18, 4, 7, 29, 6, 34];
+<br> const threshold = 15;
+<br> 
+<br> // Для чисел меньше чем порог срабатывает continue, выполнение тела прекращается
+<br> // и управление передаётся на следующую итерацию.
+<br> for (let i = 0; i < numbers.length; i += 1) {
+<br>   if (numbers[i] < threshold) {
+<br>     continue;
+<br>   }
+<br> 
+<br>   console.log(`Число больше чем ${threshold}: ${numbers[i]}`); // 18, 29, 34
+<br> }
+</code>
         </p>
     </section>
 </body>
