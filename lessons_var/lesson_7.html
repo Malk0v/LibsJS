@@ -12,86 +12,110 @@
         <a href="../1_var_type.html"><<назад</a>
         <h1>Основные операторы</h1>
         <p>
-          Математические операторы
+         <h2>
+              Математические операторы
+         </h2>
+
 Назначение, функционал и приоритет (порядок) операций ничем не отличаются от школьного курса алгебры. Операторы возвращают значение как результат выражения.
 
-const x = 10;
-const y = 5;
+<code>
+    const x = 10;
+<br>const y = 5;
+<br>
+<br>// Сложение
+<br>console.log(x + y); // 15
+<br>
+<br>// Вычитание
+<br>console.log(x - y); // 5
+<br>
+<br>// Умножение
+<br>console.log(x * y); // 50
+<br>
+<br>// Деление
+<br>console.log(x / y); // 2
+<br>
+<br>// Остаток от деления
+<br>console.log(x % y); // 0
+<br>
+<br>// Сложение с заменой (также есть для всех других операторов)
+<br>let value = 5;
+<br>
+<br>// Аналогично записи value = value + 10;
+<br>value += 10;
+<br>console.log(value); // 15
+</code>
 
-// Сложение
-console.log(x + y); // 15
 
-// Вычитание
-console.log(x - y); // 5
-
-// Умножение
-console.log(x * y); // 50
-
-// Деление
-console.log(x / y); // 2
-
-// Остаток от деления
-console.log(x % y); // 0
-
-// Сложение с заменой (также есть для всех других операторов)
-let value = 5;
-
-// Аналогично записи value = value + 10;
-value += 10;
-console.log(value); // 15
-
-
-ИНТЕРЕСНО
+<h4>
+    ИНТЕРЕСНО
 Важно запомнить термины составляющих выражения. + - * / % называются операторы, а то, на чем они применяются - операнды.
 
-Операторы сравнения
-Используются для сравнения двух значений. Результатом своего выполнения возвращают буль - true или false, то есть «да» или «нет».
+</h4>
 
-a > b и a < b - больше/меньше
-a >= b и a <= b - больше/меньше или равно
-a == b - равенство
-a != b - неравенство
-a === b - строгое равенство
-a !== b - строгое неравенство
-const x = 5;
-const y = 10;
-const z = 5;
+<h2>
+    Операторы сравнения
+</h2>
 
-console.log("x > y:", x > y); // false
-console.log("x < y:", x < y); // true
-console.log("x < z:", x < z); // false
-console.log("x <= z:", x <= z); // true
-console.log("x === y:", x === y); // false
-console.log("x === z:", x === z); // true
-console.log("x !== y:", x !== y); // true
-console.log("x !== z:", x !== z); // false
+Используются для сравнения двух значений. Результатом своего выполнения возвращают буль - <span>true или false,</span> то есть «да» или «нет».
 
-Операторы равенства
+<ul>
+    <li>a > b и a < b - больше/меньше</li>
+    <li>a >= b и a <= b - больше/меньше или равно</li>
+    <li>a == b - равенство</li>
+    <li>a != b - неравенство</li>
+    <li>a === b - строгое равенство</li>
+    <li>a !== b - строгое неравенство</li>
+</ul>
+
+<code>
+ const x = 5;
+<br> const y = 10;
+<br> const z = 5;
+<br> 
+<br> console.log("x > y:", x > y); // false
+<br> console.log("x < y:", x < y); // true
+<br> console.log("x < z:", x < z); // false
+<br> console.log("x <= z:", x <= z); // true
+<br> console.log("x === y:", x === y); // false
+<br> console.log("x === z:", x === z); // true
+<br> console.log("x !== y:", x !== y); // true
+<br> console.log("x !== z:", x !== z); // false
+</code>
+
+<h2>
+    Операторы равенства
+</h2>
+
 «Нестрогие» операторы равенства == и != выполняют преобразование типов сравниваемых значений к числу, что может привести к ошибкам, особенно у начинающих.
 
-// ❌ Плохо, выполняется приведение типов
-console.log(5 == "5"); // true
-console.log(5 != "5"); // false
-console.log(1 == true); // true
-console.log(1 != true); // false
+<code>
+    // ❌ Плохо, выполняется приведение типов
+<br> console.log(5 == "5"); // true
+<br> console.log(5 != "5"); // false
+<br> console.log(1 == true); // true
+<br> console.log(1 != true); // false
+</code>
 
 На следующей иллюстрации показана таблица сравнения значений используя операторы нестрогого равенства.
 
-not strict equality
+<img src="../img/not-strict-equality.png" alt="not strict equality" width="100%">
+
 Поэтому для проверки равенства или неравенства двух значений используются только операторы === (строгое равенство) и !== (строгое неравенство), которые не выполняют приведение типов операндов.
 
-// ✅ Хорошо, приведение типов не выполняется
-console.log(5 === "5"); // false
-console.log(5 === 5); // true
-console.log(5 !== "5"); // true
-console.log(5 !== 5); // false
-console.log(1 === true); // false
-console.log(1 !== true); // true
+<code>
+    // ✅ Хорошо, приведение типов не выполняется
+<br> console.log(5 === "5"); // false
+<br> console.log(5 === 5); // true
+<br> console.log(5 !== "5"); // true
+<br> console.log(5 !== 5); // false
+<br> console.log(1 === true); // false
+<br> console.log(1 !== true); // true
+</code>
 
 В таком случае, все равно только себе. Перед оценкой ничего не преобразуется.
 
-strict equality
-        </p>
+<img src="../img/strict-equality.png" alt="strict equality" width="100%">
+ </p> <br>
     </section>
 </body>
 </html>
