@@ -14,109 +14,153 @@
         <p>
             Логические операторы используются для проверки условий с множественными выражениями, например в операциях сравнения.
 
-Приведение типов
+<h2>
+    Приведение типов
+</h2>
+
 В логических операциях осуществляется приведение типов операндов к true или false. Приведение происходит если в коде обнаружен логический оператор.
+<br><br>
+<span>Truthy и Falsy</span> - термины, которые используются для тех значений, которые, в логической операции, приводятся к true или false, хотя изначально не были булями.
 
-Truthy и Falsy - термины, которые используются для тех значений, которые, в логической операции, приводятся к true или false, хотя изначально не были булями.
-
-ИНТЕРЕСНО
+<h4>
+    ИНТЕРЕСНО
 Запомните 6 ложных (falsy) значений, приводящихся к false в логическом преобразовании: 0, NaN, null, undefined, пустая строка и false. Абсолютно все остальное приводится к true.
+</h4>
 
-Логические операторы
+<h2>
+    Логические операторы
+</h2>
+
 Есть три логических оператора, которые используются для проверки выполнения множественных выражений.
 
-logical operators
-Логическое «И»
+
+<h2>
+    Логическое «И»
+</h2>
 Оператор && приводит все операнды к булю и возвращает значение одного из них. Левый операнд если его можно привести к false, и правый в остальных случаях.
 
-выражение && выражение
+<code>
+    выражение && выражение
+</code>
 
 В следующем примере оба условия вернут true, поэтому результатом всего выражения будет true - вернётся значение правого операнда.
 
-const age = 20;
-console.log(age > 10 && age < 30); // true && true -> true
+<code>
+    const age = 20;
+<br>console.log(age > 10 && age < 30); // true && true -> true
+</code>
 
 
 Если хотябы один из операндов будет приведён к false, результатом выражения будет его значение.
 
-const age = 50;
-console.log(age > 10 && age < 30); // true && false -> false
-console.log(age > 80 && age < 120); // false && true -> false
+<code>
+    const age = 50;
+<br>console.log(age > 10 && age < 30); // true && false -> false
+<br>console.log(age > 80 && age < 120); // false && true -> false
+</code>
 
 
 То есть логическое «И» запинается на лжи и возвращает то на чём запнулось или последний операнд.
 
-console.log(1 && 5); // true && true -> 5
-console.log(5 && 1); // true && true -> 1
-console.log(0 && 2); // false && true -> 0
-console.log(2 && 0); // true && false -> 0
-console.log("" && "Mango"); // false && true -> ""
-console.log("Mango" && ""); // true && false -> ""
-console.log("Mango" && "Poly"); // true && true -> "Poly"
-console.log("Poly" && "Mango"); // true && true -> "Mango"
+<code>
+    console.log(1 && 5); // true && true -> 5
+<br> console.log(5 && 1); // true && true -> 1
+<br> console.log(0 && 2); // false && true -> 0
+<br> console.log(2 && 0); // true && false -> 0
+<br> console.log("" && "Mango"); // false && true -> ""
+<br> console.log("Mango" && ""); // true && false -> ""
+<br> console.log("Mango" && "Poly"); // true && true -> "Poly"
+<br> console.log("Poly" && "Mango"); // true && true -> "Mango"
+</code>
 
 
-ИНТЕРЕСНО
+<h4>
+    ИНТЕРЕСНО
 При выполнении логического «И», правый операнд может не вычисляться, в случае если левый был приведен к false.
 
-Логическое «ИЛИ»
+</h4>
+
+<h2>
+    Логическое «ИЛИ»
+</h2>
+
 Оператор || приводит все операнды к булю и возвращает значение одного из них. Левый операнд если его можно привести к true, и правый в остальных случаях.
 
-выражение || выражение
+<code>
+    выражение || выражение
+</code>
 
 В следующем примере условие слева вернёт true, поэтому результатом всего выражения будет true - вернётся значение первого операнда которое было приведено к true.
 
+<code>
 const age = 5;
-console.log(age < 10 || age > 30); // true || false -> true
-
+<br>console.log(age < 10 || age > 30); // true || false -> true
+</code>
 
 Тут результатом тоже будет true, так как хотябы один из операндов, в этом случае правый, был приведён к true.
 
-const age = 40;
-console.log(age < 10 || age > 30); // false || true -> true
-
+<code>
+    const age = 40;
+<br> console.log(age < 10 || age > 30); // false || true -> true
+</code>
 
 А здесь ни одно из условий не выполняется, поэтому получаем false - значение последнего операнда.
+<code>
 
 const age = 20;
-console.log(age < 10 || age > 30); // false || false -> false
-
+<br> console.log(age < 10 || age > 30); // false || false -> false
+</code>
 
 То есть логическое «ИЛИ» запинается на правде и возвращает то на чём запнулось или последний операнд.
 
-console.log(true || false); // true
-console.log(false || true); // true
-console.log(true || true); // true
+<code>
+    console.log(true || false); // true
+<br> console.log(false || true); // true
+<br> console.log(true || true); // true
+<br> 
+<br> console.log(3 || false); // 3
+<br> console.log(false || 3); // 3
+<br> console.log(3 || true); // 3
+<br> console.log(true || 3); // true
+</code>
 
-console.log(3 || false); // 3
-console.log(false || 3); // 3
-console.log(3 || true); // 3
-console.log(true || 3); // true
-
-ИНТЕРЕСНО
+<h4>
+    ИНТЕРЕСНО
 При выполнении логического «ИЛИ», правый операнд может не вычисляться, в случае если левый был приведен к true.
 
-Логическое «НЕ»
+</h4>
+
+<h2>
+    Логическое «НЕ»
+</h2>
+
 Все операторы которые мы рассматривали до этого были бинарными - содержащими два операнда, левый и правый. Логическое «НЕ» это унарный оператор - выполняющий операцию над одним операндом справа.
 
-!выражение
-
-Оператор ! приводит операнд к булю, если необходимо, а затем делает инверсию - заменяет его на противоположный true -> false или false -> true.
-
-console.log(!true); // false
-console.log(!false); // true
-console.log(!3); // !3 -> !true -> false
-console.log(!"Mango"); // !"Mango" -> !true -> false
-console.log(!0); // !0 -> !false -> true
-console.log(!""); // !"" -> !false -> true
-
-const isOnline = true;
-const isNotOnline = !isOnline; // !isOnline -> !true -> false
+<code>
+    !выражение
+</code>
 
 
-Дополнительные материалы
-Logic Gates Explained (video)
-        </p>
+Оператор <span>! </span> приводит операнд к булю, если необходимо, а затем делает инверсию - заменяет его на противоположный true -> false или false -> true.
+
+<code>
+    console.log(!true); // false
+<br> console.log(!false); // true
+<br> console.log(!3); // !3 -> !true -> false
+<br> console.log(!"Mango"); // !"Mango" -> !true -> false
+<br> console.log(!0); // !0 -> !false -> true
+<br> console.log(!""); // !"" -> !false -> true
+<br> 
+<br> const isOnline = true;
+<br> const isNotOnline = !isOnline; // !isOnline -> !true -> false
+</code>
+
+
+<h2>
+    Дополнительные материалы
+</h2>
+<a href="https://youtu.be/UvI-AMAtrvE">Logic Gates Explained (video)</a>
+</p>
     </section>
 </body>
 </html>
