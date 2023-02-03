@@ -12,235 +12,306 @@
         <a href="../3_arrays.html"><<назад</a>
         <h1>Методы массива</h1>
         <p>
-            Методы split() и join()
-Метод split(delimiter) превращает строку в массив, «разбив» её по разделителю delimiter. Если разделитель это пустая строка, то получится массив отдельных символов. Разделителем может быть один или несколько символов.
+            <h2>
+              Методы split() и join()
+            </h2>
 
-const name = "Mango";
-console.log(name.split("")); // ["M", "a", "n", "g", "o"]
+Метод <span>split(delimiter)</span> превращает строку в массив, «разбив» её по разделителю delimiter. Если разделитель это пустая строка, то получится массив отдельных символов. Разделителем может быть один или несколько символов.
 
-const message = "JavaScript это интересно";
-console.log(message.split(" ")); // ["JavaScript", "это", "интересно"]
+<code>
+  const name = "Mango";
+<br> console.log(name.split("")); // ["M", "a", "n", "g", "o"]
+<br> 
+<br> const message = "JavaScript это интересно";
+<br> console.log(message.split(" ")); // ["JavaScript", "это", "интересно"]
+</code>
 
 
-Метод массивов join(delimiter) соединяет элементы массива в строку. В строке элементы будут разделены символом или группой символов указанных в delimiter. То есть это операция обратная методу строк split(delimiter).
+Метод массивов <span>join(delimiter)</span> соединяет элементы массива в строку. В строке элементы будут разделены символом или группой символов указанных в delimiter. То есть это операция обратная методу строк split(delimiter).
 
-const words = ["JavaScript", "это", "интересно"];
-console.log(words.join("")); // "JavaScriptэтоинтересно"
-console.log(words.join(" ")); // "JavaScript это интересно"
-console.log(words.join("-")); // "JavaScript-это-интересно"
+<code>
+  const words = ["JavaScript", "это", "интересно"];
+<br> console.log(words.join("")); // "JavaScriptэтоинтересно"
+<br> console.log(words.join(" ")); // "JavaScript это интересно"
+<br> console.log(words.join("-")); // "JavaScript-это-интересно"
+</code>
 
-Метод indexOf()
-indexOf(value) возвращает первый индекс, в котором элемент со значением value был найден в массиве, или число -1, если такого элемента нет. Используйте indexOf тогда, когда необходимо получить непосредственно индекс элемента.
+<h2>
+  Метод indexOf()
+</h2>
 
-const clients = ["Mango", "Ajax", "Poly", "Kiwi"];
-console.log(clients.indexOf("Poly")); // 2
-console.log(clients.indexOf("Monkong")); // -1
+<span>indexOf(value)</span> возвращает первый индекс, в котором элемент со значением value был найден в массиве, или число -1, если такого элемента нет. Используйте indexOf тогда, когда необходимо получить непосредственно индекс элемента.
 
-Метод includes()
-includes(value) проверяет есть ли в массиве элемент со значением value и возвращает true или false соответственно. Область применения этого метода сводится к ситуациям когда необходимо проверить есть ли элемент в массиве и не важна его позиция (индекс).
+<code>
+  const clients = ["Mango", "Ajax", "Poly", "Kiwi"];
+<br> console.log(clients.indexOf("Poly")); // 2
+<br> console.log(clients.indexOf("Monkong")); // -1
+</code>
 
-const clients = ["Mango", "Ajax", "Poly", "Kiwi"];
-console.log(clients.includes("Poly")); // true
-console.log(clients.includes("Monkong")); // false
+<h2>
+  Метод includes()
+</h2>
+<span>includes(value) </span> проверяет есть ли в массиве элемент со значением value и возвращает true или false соответственно. Область применения этого метода сводится к ситуациям когда необходимо проверить есть ли элемент в массиве и не важна его позиция (индекс).
 
-Проверка множественных условий с includes()
+<code>
+  const clients = ["Mango", "Ajax", "Poly", "Kiwi"];
+<br> console.log(clients.includes("Poly")); // true
+<br> console.log(clients.includes("Monkong")); // false
+</code>
+
+<h2>
+  Проверка множественных условий с includes()
+</h2>
 На первый взгляд код следующего примера выглядит хорошо.
 
-const fruit = "apple";
-
-if (fruit === "apple" || fruit === "strawberry") {
-  console.log("It is a red fruit!");
-}
+<code>
+  const fruit = "apple";
+<br> 
+<br> if (fruit === "apple" || fruit === "strawberry") {
+<br>   console.log("It is a red fruit!");
+<br> }
+</code>
 
 Однако, что если у нас будет больше красных фруктов, к примеру ещё вишня (cherry) или клюква (cranberries)? Будем ли мы расширять условие с помощью дополнительных ||?
 
-const fruit = "apple";
+<code>
+  const fruit = "apple";
+<br> 
+<br> if (
+<br>   fruit === "apple" ||
+<br>   fruit === "strawberry" ||
+<br>   fruit === "cherry" ||
+<br>   fruit === "cranberries"
+<br> ) {
+<br>   console.log("It is a red fruit!");
+<br> }
+</code>
 
-if (
-  fruit === "apple" ||
-  fruit === "strawberry" ||
-  fruit === "cherry" ||
-  fruit === "cranberries"
-) {
-  console.log("It is a red fruit!");
-}
+Можем переписать условие используя метод <span>includes()</span>, это очень просто и масштабируемо.
 
-Можем переписать условие используя метод includes(), это очень просто и масштабируемо.
-
-// Выносим варианты в массив
-const redFruits = ["apple", "strawberry", "cherry", "cranberries"];
-const fruit = "cherry";
-// Проверяем наличие элемента
-const hasFruit = redFruits.includes(fruit);
-
-if (hasFruit) {
-  console.log(`${fruit} is a red fruit!`);
-}
+<code>
+  // Выносим варианты в массив
+<br> const redFruits = ["apple", "strawberry", "cherry", "cranberries"];
+<br> const fruit = "cherry";
+<br> // Проверяем наличие элемента
+<br> const hasFruit = redFruits.includes(fruit);
+<br> 
+<br> if (hasFruit) {
+<br>   console.log(`${fruit} is a red fruit!`);
+<br> }
+</code>
 
 
-Методы push() и pop()
+<h2>
+  Методы push() и pop()
+</h2>
 Добавляют или удаляют крайние элементы массива. Работают только с крайним левым и крайним правым элементом и не могут поставить или удалить элемент с произвольной позиции.
+<br>
+<br>
+Метод <span>push()</span> добавляет один или несколько элементов в конец массива, без необходимости указывать индексы добавляемых элементов. Возвращает длину массива после добавления элементов.
 
-array methods
-Метод push() добавляет один или несколько элементов в конец массива, без необходимости указывать индексы добавляемых элементов. Возвращает длину массива после добавления элементов.
+<code>
+  const numbers = [];
+<br> 
+<br> numbers.push(1);
+<br> console.log(numbers); // [1]
+<br> 
+<br> numbers.push(2);
+<br> console.log(numbers); // [1, 2]
+<br> 
+<br> numbers.push(3);
+<br> console.log(numbers); // [1, 2, 3]
+<br> 
+<br> numbers.push(4);
+<br> console.log(numbers); // [1, 2, 3, 4]
+<br> 
+<br> numbers.push(5);
+<br> console.log(numbers); // [1, 2, 3, 4, 5]
+</code>
 
-push method
-const numbers = [];
+Метод <span>pop()</span> удаляет последний элемент из конца массива и возвращает удаленный элемент. Если массив пустой, метод возвращает undefined.
 
-numbers.push(1);
-console.log(numbers); // [1]
+ 
+<code>
+  const numbers = [1, 2, 3, 4, 5];
+<br>
+<br>   console.log(numbers.pop()); //  5
+<br> console.log(numbers); // [1, 2, 3, 4]
+<br> 
+<br> console.log(numbers.pop()); //  4
+<br> console.log(numbers); // [1, 2, 3]
+<br> 
+<br> console.log(numbers.pop()); //  3
+<br> console.log(numbers); // [1, 2]
+<br> 
+<br> console.log(numbers.pop()); //  2
+<br> console.log(numbers); // [1]
+<br> 
+<br> console.log(numbers.pop()); //  1
+<br> console.log(numbers); // []
+</code>
 
-numbers.push(2);
-console.log(numbers); // [1, 2]
+<h2>
+  Метод slice()
+</h2>
 
-numbers.push(3);
-console.log(numbers); // [1, 2, 3]
+<span>slice(begin, end) </span> возвращает новый массив, содержащий копию части исходного массива, не изменяя его. Копия делается от begin и до, но не включая, end - индексы элементов исходного массива.
 
-numbers.push(4);
-console.log(numbers); // [1, 2, 3, 4]
-
-numbers.push(5);
-console.log(numbers); // [1, 2, 3, 4, 5]
-
-Метод pop() удаляет последний элемент из конца массива и возвращает удаленный элемент. Если массив пустой, метод возвращает undefined.
-
-pop method
-const numbers = [1, 2, 3, 4, 5];
-
-console.log(numbers.pop()); //  5
-console.log(numbers); // [1, 2, 3, 4]
-
-console.log(numbers.pop()); //  4
-console.log(numbers); // [1, 2, 3]
-
-console.log(numbers.pop()); //  3
-console.log(numbers); // [1, 2]
-
-console.log(numbers.pop()); //  2
-console.log(numbers); // [1]
-
-console.log(numbers.pop()); //  1
-console.log(numbers); // []
-
-Метод slice()
-slice(begin, end) возвращает новый массив, содержащий копию части исходного массива, не изменяя его. Копия делается от begin и до, но не включая, end - индексы элементов исходного массива.
-
-slice method
-const clients = ["Mango", "Ajax", "Poly", "Kiwi"];
-console.log(clients.slice(1, 3)); // ["Ajax", "Poly"]
+<code>
+  const clients = ["Mango", "Ajax", "Poly", "Kiwi"];
+<br> console.log(clients.slice(1, 3)); // ["Ajax", "Poly"]
+</code>
 
 Если begin и end не указаны, будет создана полная копия исходного массива.
 
-const clients = ["Mango", "Ajax", "Poly", "Kiwi"];
-console.log(clients.slice()); // ["Mango", Ajax", "Poly", "Kiwi"]
-
+<code>
+  const clients = ["Mango", "Ajax", "Poly", "Kiwi"];
+<br> console.log(clients.slice()); // ["Mango", Ajax", "Poly", "Kiwi"]
+</code>
 
 Если не указан end, копирование будет от start и до конца исходного массива.
 
-const clients = ["Mango", "Ajax", "Poly", "Kiwi"];
-console.log(clients.slice(1)); // ["Ajax", "Poly", "Kiwi"]
-console.log(clients.slice(2)); // ["Poly", "Kiwi"]
+<code>
+  const clients = ["Mango", "Ajax", "Poly", "Kiwi"];
+<br> console.log(clients.slice(1)); // ["Ajax", "Poly", "Kiwi"]
+<br> console.log(clients.slice(2)); // ["Poly", "Kiwi"]
+</code>
 
 Если значение start отрицательное, а end не указан, то будут скопированы последние start элементов
 
+<code>
 const clients = ["Mango", "Ajax", "Poly", "Kiwi"];
-console.log(clients.slice(-2)); // ["Poly", "Kiwi"]
+<br> console.log(clients.slice(-2)); // ["Poly", "Kiwi"]
+</code>
 
-Метод splice()
+<h2>
+  Метод splice()
+</h2>
+
 Швейцарский нож для работы с массивами, если исходный массив нужно изменить. Удаляет, добавляет и заменяет элементы в произвольном месте массива.
 
-Удаление
+<h2>
+  Удаление
+</h2>
+
 Чтобы удалить элементы в массиве, передаются два аргумента.
 
-splice(position, num)
+<code>splice(position, num)</code>
+<ul>
+  <li>position - указывает позицию (индекс) первого элемента для удаления</li>
+  <li>num - определяет количество удаляемых элементов</li>
+</ul>
 
-position - указывает позицию (индекс) первого элемента для удаления
-num - определяет количество удаляемых элементов
-Метод splice изменяет исходный массив и возвращает массив, содержащий удаленные элементы. Например, у нас есть массив оценок, который содержит пять чисел от 1 до 5.
 
-const scores = [1, 2, 3, 4, 5];
+Метод <span>splice</span> изменяет исходный массив и возвращает массив, содержащий удаленные элементы. Например, у нас есть массив оценок, который содержит пять чисел от 1 до 5.
 
-// Удаляем три элемента массива, начиная с первого элемента (индекс 0)
-const deletedScores = scores.splice(0, 3);
-
-// Теперь массив scores содержит два элемента
-console.log(scores); // [4, 5]
-
-// А массив deletedScores содержит три удаленных элемента
-console.log(deletedScores); // [1, 2, 3]
-
+<code>
+  const scores = [1, 2, 3, 4, 5];
+<br> 
+<br> // Удаляем три элемента массива, начиная с первого элемента (индекс 0)
+<br> const deletedScores = scores.splice(0, 3);
+<br> 
+<br> // Теперь массив scores содержит два элемента
+<br> console.log(scores); // [4, 5]
+<br> 
+<br> // А массив deletedScores содержит три удаленных элемента
+<br> console.log(deletedScores); // [1, 2, 3]
+</code>
 
 На рисунке показан вызов метода score.splice(0, 3) из примера.
 
-splice remove
-ИНТЕРЕСНО
+
+<h4>
+  ИНТЕРЕСНО
 На практике возращаемое значение (массив удалённых элементов) используется редко. В основном просто необходимо удалить элементы из массива.
 
-Добавление
+</h4>
+
+<h2>
+  Добавление
+</h2>
+
 Для того чтобы добавить один или несколько элементов в массив, необходимо передать три или более аргумента, при этом второй аргумент должен быть равен нулю.
 
-splice(position, 0, new_element_1, new_element_2, ...)
+<code>
+  splice(position, 0, new_element_1, new_element_2, ...)
+</code>
 
-Аргумент position указывает начальную позицию в массиве, куда будут вставлены новые элементы.
-Второй аргумент это ноль, он говорит методу не удалять элементы в месте добавления новых.
-Третий, четвертый и все последующие аргументы - это новые элементы, которые добавляются в массив.
+<ul>
+  <li>Аргумент position указывает начальную позицию в массиве, куда будут вставлены новые элементы</li>
+  <li>Второй аргумент это ноль, он говорит методу не удалять элементы в месте добавления новых</li>
+  <li>Третий, четвертый и все последующие аргументы - это новые элементы, которые добавляются в массив</li>
+</ul>
+
 Например, у нас есть массив с названиями цветов в виде строк. Добавим новый цвет перед элементом с индексом 2.
 
-const colors = ["red", "green", "blue"];
+<code>
+  const colors = ["red", "green", "blue"];
+<br> 
+<br> colors.splice(2, 0, "purple");
+<br> console.log(colors); // ["red", "green", "purple", "blue"]
+</code>
 
-colors.splice(2, 0, "purple");
-console.log(colors); // ["red", "green", "purple", "blue"]
-
-На рисунке показан вызов метода colors.splice(2, 0, 'purple') из примера.
-
-splice insert
 Можно добавить произвольное количество элементов, передав четвертый, пятый аргумент и т. д.
 
-const colors = ["red", "green", "blue"];
+<code>
+  const colors = ["red", "green", "blue"];
+<br> 
+<br> colors.splice(1, 0, "yellow", "pink");
+<br> console.log(colors); // ["red", "yellow", "pink", "green", "blue"]
+</code>
 
-colors.splice(1, 0, "yellow", "pink");
-console.log(colors); // ["red", "yellow", "pink", "green", "blue"]
 
+<h2>
+  Замена
+</h2>
 
-Замена
 Замена это операция добавления в которой удаляются элементы в месте добавления новых. Для этого необходимо передать минимум три аргумента. Количество удаляемых и добавляемых элементов может не совпадать.
 
-splice(position, num, new_element_1, new_element_2, ...)
+<code>
+  splice(position, num, new_element_1, new_element_2, ...)
+</code>
 
-position - указывает позицию (индекс) первого элемента для удаления
-num - определяет количество удаляемых элементов
-Третий, четвертый и все последующие аргументы - это новые элементы, которые добавляются в массив.
+<ul>
+  <li>position - указывает позицию (индекс) первого элемента для удаления</li>
+  <li>num - определяет количество удаляемых элементов</li>
+  <li>Третий, четвертый и все последующие аргументы - это новые элементы, которые добавляются в массив.</li>
+</ul>
+
 например, у нас есть массив языков программирования из четырех элементов.
 
-const languages = ["C", "C++", "Java", "JavaScript"];
+<code>
+  const languages = ["C", "C++", "Java", "JavaScript"];
+<br> 
+<br> // Заменяем элемент с индексом 1 на новый
+<br> languages.splice(1, 1, "Python");
+<br> console.log(languages); // ["C", "Python", "Java", "JavaScript"]
+<br> 
+<br> // Заменяем один элемент (с индексом 2) на несколько
+<br> languages.splice(2, 1, "C#", "Swift", "Go");
+<br> console.log(languages); // ["C", "Python", "C#", "Swift", "Go", "JavaScript"]
+</code>
 
-// Заменяем элемент с индексом 1 на новый
-languages.splice(1, 1, "Python");
-console.log(languages); // ["C", "Python", "Java", "JavaScript"]
+<h2>
+  Метод concat()
+</h2>
 
-// Заменяем один элемент (с индексом 2) на несколько
-languages.splice(2, 1, "C#", "Swift", "Go");
-console.log(languages); // ["C", "Python", "C#", "Swift", "Go", "JavaScript"]
-
-
-На рисунке показан вызов метода languages.splice(1, 1, 'Python') из примера.
-
-splice replace
-Метод concat()
 Объединяет два или более массива в один. Он не изменяет массив на котором вызывается, а возвращает новый. Порядок аргументов метода влияет на порядок элементов нового массива.
 
-const oldClients = ["Mango", "Ajax", "Poly", "Kiwi"];
-const newClients = ["Monkong", "Singu"];
-
-const allClientsWithOldFirst = oldClients.concat(newClients);
-console.log(allClientsWithOldFirst); // ["Mango", "Ajax", "Poly", "Kiwi", "Monkong", "Singu"]
-
-const allClientsWithNewFirst = newClients.concat(oldClients);
-console.log(allClientsWithNewFirst); // ["Monkong", "Singu", "Mango", "Ajax", "Poly", "Kiwi"]
-
-console.log(oldClients); // ["Mango", "Ajax", "Poly", "Kiwi"]
-console.log(newClients); // ["Monkong", "Singu"]
+<code>
+  const oldClients = ["Mango", "Ajax", "Poly", "Kiwi"];
+<br> const newClients = ["Monkong", "Singu"];
+<br> 
+<br> const allClientsWithOldFirst = oldClients.concat(newClients);
+<br> console.log(allClientsWithOldFirst); // ["Mango", "Ajax", "Poly", "Kiwi", "Monkong", "Singu"]
+<br> 
+<br> const allClientsWithNewFirst = newClients.concat(oldClients);
+<br> console.log(allClientsWithNewFirst); // ["Monkong", "Singu", "Mango", "Ajax", "Poly", "Kiwi"]
+<br> 
+<br> console.log(oldClients); // ["Mango", "Ajax", "Poly", "Kiwi"]
+<br> console.log(newClients); // ["Monkong", "Singu"]
 </p>
+</code>
     </section>
 </body>
 </html>
