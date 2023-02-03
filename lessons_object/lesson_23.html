@@ -14,163 +14,196 @@
         <p>
           В отличии от массива или строки, объект это не итерируемая сущность, то есть его нельзя перебрать циклами for или for...of.
 
-Цикл for...in
-Для перебора объектов используется специальный цикл for...in, который перебирает ключи объекта object.
+<h2>
+  Цикл for...in
+</h2>
+Для перебора объектов используется специальный цикл <span>for...in</span>, который перебирает ключи объекта object.
 
-for (key in object) {
-  // инструкции
-}
+<code>
+  for (key in object) {
+<br>  // инструкции
+<br>  }
+</code>
 
 Переменная key доступная только в теле цикла. На каждой итерации в неё будет записано значение ключа (имя) свойства. Для того чтобы получить значение свойства с таким ключом (именем), используется синтаксис квадратных скобок.
 
-const book = {
-  title: "The Last Kingdom",
-  author: "Bernard Cornwell",
-  genres: ["historical prose", "adventure"],
-  rating: 8.38,
-};
+<code>
+  const book = {
+<br>    title: "The Last Kingdom",
+<br>    author: "Bernard Cornwell",
+<br>    genres: ["historical prose", "adventure"],
+<br>    rating: 8.38,
+<br>  };
+<br>  
+<br>  for (const key in book) {
+<br>    // Ключ
+<br>    console.log(key);
+<br>    // Значение свойства с таким ключом
+<br>    console.log(book[key]);
+<br>  }
+</code>
 
-for (const key in book) {
-  // Ключ
-  console.log(key);
-  // Значение свойства с таким ключом
-  console.log(book[key]);
-}
-
-Метод hasOwnProperty()
+<h2>
+  Метод hasOwnProperty()
+</h2>
 Разберём концепцию собственных и несобственных свойств объекта и научимся правильно использовать цикл for...in.
 
-const animal = {
-  legs: 4,
-};
-const dog = Object.create(animal);
-dog.name = "Манго";
-
-console.log(dog); // {name: 'Манго'}
-console.log(dog.name); // 'Манго'
-console.log(dog.legs); // 4
+<code>
+  const animal = {
+<br>    legs: 4,
+<br>  };
+<br>  const dog = Object.create(animal);
+<br>  dog.name = "Манго";
+<br>  
+<br>  console.log(dog); // {name: 'Манго'}
+<br>  console.log(dog.name); // 'Манго'
+<br>  console.log(dog.legs); // 4
+</code>
 
 Метод Object.create(animal) создаёт и возвращает новый объект, связывая его с объектом animal. Поэтому можно получить значение свойства legs обратившись к нему как dog.legs, хотя его нет в объекте dog - это несобственное свойство из объекта animal.
+<br><br>
+Оператор in, который используется в цикле <span>for...in</span>, не делает различия между собственными и несобственными свойствами объекта. Эта особенность мешает, так как мы всегда хотим перебрать только собственные свойства. Для того чтобы узнать есть в объекте собственное свойство или нет, используется метод <span>hasOwnProperty(key)</span>, который возвращает true или false.
 
-Оператор in, который используется в цикле for...in, не делает различия между собственными и несобственными свойствами объекта. Эта особенность мешает, так как мы всегда хотим перебрать только собственные свойства. Для того чтобы узнать есть в объекте собственное свойство или нет, используется метод hasOwnProperty(key), который возвращает true или false.
-
-// ❌ Возвращает true для всех свойств
-console.log("name" in dog); // true
-console.log("legs" in dog); // true
-
-// ✅ Возвращает true только для собственных свойств
-console.log(dog.hasOwnProperty("name")); // true
-console.log(dog.hasOwnProperty("legs")); // false
+<code>
+  // ❌ Возвращает true для всех свойств
+<br>  console.log("name" in dog); // true
+<br>  console.log("legs" in dog); // true
+<br>  
+<br>  // ✅ Возвращает true только для собственных свойств
+<br>  console.log(dog.hasOwnProperty("name")); // true
+<br>  console.log(dog.hasOwnProperty("legs")); // false
+</code>
 
 Поэтому при переборе циклом for...in необходимо на каждой итерации добавить проверку на собственное свойство. Даже если сейчас мы уверены в том что у объекта нет несобственных свойств, это оградит от возможных ошибок в будущем.
 
-const book = {
-  title: "The Last Kingdom",
-  author: "Bernard Cornwell",
-  genres: ["historical prose", "adventure"],
-  rating: 8.38,
-};
+<code>
+  const book = {
+<br>    title: "The Last Kingdom",
+<br>    author: "Bernard Cornwell",
+<br>    genres: ["historical prose", "adventure"],
+<br>    rating: 8.38,
+<br>  };
+<br>  
+<br>  for (const key in book) {
+<br>    // Если это собственное свойство - выполняем тело if
+<br>    if (book.hasOwnProperty(key)) {
+<br>      console.log(key);
+<br>      console.log(book[key]);
+<br>    }
+<br>  
+<br>    // Если это не собственное свойство - ничего не делаем
+<br>  }
+</code>
 
-for (const key in book) {
-  // Если это собственное свойство - выполняем тело if
-  if (book.hasOwnProperty(key)) {
-    console.log(key);
-    console.log(book[key]);
-  }
-
-  // Если это не собственное свойство - ничего не делаем
-}
-
-Метод Object.keys()
+<h2>
+  Метод Object.keys()
+</h2>
 У встроенного класса Object есть несколько полезных методов для работы с объектами. Первый из них это Object.keys(obj), который принимает объект и возвращает массив ключей его собственных свойств. Если в объекте нет свойств, метод вернёт пустой массив.
 
-const book = {
-  title: "The Last Kingdom",
-  author: "Bernard Cornwell",
-  genres: ["historical prose", "adventure"],
-  rating: 8.38,
-};
-const keys = Object.keys(book);
-console.log(keys); // ['title', 'author', 'genres', 'rating']
+<code>
+  const book = {
+<br>    title: "The Last Kingdom",
+<br>    author: "Bernard Cornwell",
+<br>    genres: ["historical prose", "adventure"],
+<br>    rating: 8.38,
+<br>  };
+<br>  const keys = Object.keys(book);
+<br>  console.log(keys); // ['title', 'author', 'genres', 'rating']
+</code>
 
 
-Скомбинировав результат Object.keys() и цикл for...of можно удобно перебрать собственные свойства объекта, не прибегая к использованию архаического цикла for...in с проверками принадлежности свойств.
+Скомбинировав результат<span> Object.keys() и цикл for...of</span> можно удобно перебрать собственные свойства объекта, не прибегая к использованию архаического цикла for...in с проверками принадлежности свойств.
 
-const book = {
-  title: "The Last Kingdom",
-  author: "Bernard Cornwell",
-  genres: ["historical prose", "adventure"],
-  rating: 8.38,
-};
-const keys = Object.keys(book);
-
-for (const key of keys) {
-  // Ключ
-  console.log(key);
-  // Значение свойства
-  console.log(book[key]);
-}
+<code>
+ <br>   const book = {
+<br>    title: "The Last Kingdom",
+<br>    author: "Bernard Cornwell",
+<br>    genres: ["historical prose", "adventure"],
+<br>    rating: 8.38,
+<br>  };
+<br>  const keys = Object.keys(book);
+<br>  
+<br>  for (const key of keys) {
+<br>    // Ключ
+<br>    console.log(key);
+<br>    // Значение свойства
+<br>    console.log(book[key]);
+<br>  }
+</code>
 
 Мы перебираем массив ключей объекта и на каждой итерации получаем значение свойства с таким ключом.
 
-Метод Object.values()
+<h2>
+  Метод Object.values()
+</h2>
+
 Если метод Object.keys(obj) возвращает массив ключей собственных свойств обьекта, то метод Object.values(obj) возвращает массив значений его собственных свойств. Если в объекте нет свойств, метод Object.values(obj) вернёт пустой массив.
 
-const book = {
-  title: "The Last Kingdom",
-  author: "Bernard Cornwell",
-  rating: 8.38,
-};
-const keys = Object.keys(book);
-console.log(keys); // ['title', 'author', 'rating']
-
-const values = Object.values(book);
-console.log(values); // ['The Last Kingdom', 'Bernard Cornwell', 8.38]
+<code>
+  const book = {
+<br>    title: "The Last Kingdom",
+<br>    author: "Bernard Cornwell",
+<br>    rating: 8.38,
+<br>  };
+<br>  const keys = Object.keys(book);
+<br>  console.log(keys); // ['title', 'author', 'rating']
+<br>  
+<br>  const values = Object.values(book);
+<br>  console.log(values); // ['The Last Kingdom', 'Bernard Cornwell', 8.38]
+</code>
 
 
 Массив значений свойств также можно перебрать циклом for...of, например для получения общей суммы числовых значений.
-
+<br><br>
 Допустим перед нами стоит задача посчитать общее количество продуктов в объекте формата имя-продукта: количество. Тогда подойдет метод Object.values() для того, чтобы получить массив всех значений и потом удобно их сложить.
 
-const goods = {
-  apples: 6,
-  grapes: 3,
-  bread: 4,
-  cheese: 7,
-};
+<code>
+  const goods = {
+<br>    apples: 6,
+<br>    grapes: 3,
+<br>    bread: 4,
+<br>    cheese: 7,
+<br>  };
+<br>  
+<br>  const values = Object.values(goods); // [6, 3, 4, 7]
+<br>  
+<br>  let total = 0;
+<br>  
+<br>  for (const value of values) {
+<br>    total += value;
+<br>  }
+<br>  
+<br>  console.log(total); // 20
+</code>
 
-const values = Object.values(goods); // [6, 3, 4, 7]
+<h2>
+  Метод Object.entries()
+</h2>
 
-let total = 0;
+Метод <span>Object.entries(obj)</span> возвращает массив записей, каждым элементом которого будет еще один массив из 2-х элементов: имени свойства и значения этого свойства из объекта obj.
 
-for (const value of values) {
-  total += value;
-}
-
-console.log(total); // 20
-
-Метод Object.entries()
-Метод Object.entries(obj) возвращает массив записей, каждым элементом которого будет еще один массив из 2-х элементов: имени свойства и значения этого свойства из объекта obj.
-
-const book = {
-  title: "The Last Kingdom",
-  author: "Bernard Cornwell",
-  rating: 8.38,
-};
-const keys = Object.keys(book);
-console.log(keys); // ['title', 'author', 'rating']
-
-const values = Object.values(book);
-console.log(values); // ['The Last Kingdom', 'Bernard Cornwell', 8.38]
-
-const entries = Object.entries(book);
-console.log(entries);
-// [["title", "The Last Kingdom"], ["author", "Bernard Cornwell"], ["rating", 8.38]]
+<code>
+  const book = {
+<br>    title: "The Last Kingdom",
+<br>    author: "Bernard Cornwell",
+<br>    rating: 8.38,
+<br>  };
+<br>  const keys = Object.keys(book);
+<br>  console.log(keys); // ['title', 'author', 'rating']
+<br>  
+<br>  const values = Object.values(book);
+<br>  console.log(values); // ['The Last Kingdom', 'Bernard Cornwell', 8.38]
+<br>  
+<br>  const entries = Object.entries(book);
+<br>  console.log(entries);
+<br>  // [["title", "The Last Kingdom"], ["author", "Bernard Cornwell"], ["rating", 8.38]]
+</code>
 
 
-ИНТЕРЕСНО
+<h4>ИНТЕРЕСНО
 На практике метод Object.entries(obj) используется редко, только для каких-то очень специфичных задач. В 99% случаев будет использован метод Object.keys() или Object.values().
-        </p>
+ </h4> 
+      </p>
     </section>
 </body>
 </html>
