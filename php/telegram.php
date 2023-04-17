@@ -24,4 +24,27 @@ if ($sendToTelegram && $sendToTelegram2) {
 } else {
   echo "Error";
 }
+
+
+// Получите API-ключ и ID канала
+// $api_key = '6118003524:AAHjYaqFCkQEhg4QEwX4PBp6iGMR2q0uJjw"';
+// $chat_id = '-955884985';
+
+// // Получите данные из формы
+
+// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//   // Ваш код для обработки данных из формы и отправки сообщения в канал Telegram
+// }
+
+// $name = $_POST['name'];
+// $email = $_POST['email'];
+// $message = $_POST['message'];
+
+// // Сформируйте сообщение
+// $text = "Новое сообщение от $name ($email):\n\n$message";
+
+// // Отправьте сообщение в канал Telegram
+// $url = "https://api.telegram.org/bot$api_key/sendMessage?chat_id=$chat_id&text=".urlencode($text);
+// file_get_contents($url);
+
 ?>
