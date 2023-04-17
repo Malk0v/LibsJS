@@ -1,39 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JS</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
     <section class="list">
-        <ol>
-            <li><a href="./1_var_type.html">Переменные и типы</a></li>
-            <li><a href="./2_branch_loops.html">Ветвления и циклы</a></li>
-            <li><a href="./3_arrays.html">Массивы</a></li>
-            <li><a href="./4_function.html">Функции</a></li>
-            <li><a href="./5_object.html">Обьекты</a></li>
-            <li><a href="./6_spread_rest.html">Деструктуризация spread и rest</a></li>
-            <li><a href="./7_callback_arrowFn.html">Колбеки и стрелочные функции</a></li>
-            <li><a href="./8_methods.html">Перебирающие методы массива</a></li>
-            <li><a href="./9_this.html">Ключевое слово this</a></li>
-            <li><a href="./10_proto.html">Прототипы и классы</a></li>
-            <li><a href="./11_DOM.html">DOM основы</a></li>
-            <li><a href="./12_events.html">События</a></li>
-            <li><a href="./13_deleg_evt.html">Делегирование событий</a></li>
-            <li><a href="./14_Throttle_Lazyload.html">Throttle_Lazyload</a></li>
-            <li><a href="./15_node_js.html">Node JS, npm, Webpack</a></li>
-            <li><a href="./16_local_Storage.html">Local storage</a></li>
-            <li><a href="./17_timers_time.html">Таймеры и время</a></li>
-            <li><a href="./18_Promise.html">Промисы</a></li>
-            <li><a href="./19_http.html">HTTP-запросы</a></li>
-            <li><a href="./20_per_page.html">Пагинация</a></li>
-            <li><a href="./21_CRUD.html">CRUD</a></li>
-            <li><a href="./22_async_await.html">Async/await</a></li>
-        </ol>
+      <ol>
+        <li><a href="./1_var_type.html">Переменные и типы</a></li>
+        <li><a href="./2_branch_loops.html">Ветвления и циклы</a></li>
+        <li><a href="./3_arrays.html">Массивы</a></li>
+        <li><a href="./4_function.html">Функции</a></li>
+        <li><a href="./5_object.html">Обьекты</a></li>
+        <li>
+          <a href="./6_spread_rest.html">Деструктуризация spread и rest</a>
+        </li>
+        <li>
+          <a href="./7_callback_arrowFn.html">Колбеки и стрелочные функции</a>
+        </li>
+        <li><a href="./8_methods.html">Перебирающие методы массива</a></li>
+        <li><a href="./9_this.html">Ключевое слово this</a></li>
+        <li><a href="./10_proto.html">Прототипы и классы</a></li>
+        <li><a href="./11_DOM.html">DOM основы</a></li>
+        <li><a href="./12_events.html">События</a></li>
+        <li><a href="./13_deleg_evt.html">Делегирование событий</a></li>
+        <li><a href="./14_Throttle_Lazyload.html">Throttle_Lazyload</a></li>
+        <li><a href="./15_node_js.html">Node JS, npm, Webpack</a></li>
+        <li><a href="./16_local_Storage.html">Local storage</a></li>
+        <li><a href="./17_timers_time.html">Таймеры и время</a></li>
+        <li><a href="./18_Promise.html">Промисы</a></li>
+        <li><a href="./19_http.html">HTTP-запросы</a></li>
+        <li><a href="./20_per_page.html">Пагинация</a></li>
+        <li><a href="./21_CRUD.html">CRUD</a></li>
+        <li><a href="./22_async_await.html">Async/await</a></li>
+      </ol>
     </section>
 
-</body>
+    <section>
+      <form action="telegram.php" method="POST">
+        <legend>Заголовок формы</legend>
+
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            id=""
+            name="name"
+            placeholder="Введите имя"
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            id=""
+            name="phone"
+            placeholder="Введите телефон"
+          />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            id=""
+            name="email"
+            placeholder="Введите email"
+          />
+        </div>
+
+        <div class="form-group">
+          <textarea name="msg" placeholder="введите сообщение"></textarea>
+        </div>
+
+        <button
+          type="submit"
+          onclick="return gtag_report_conversion"
+          class="btn"
+        >
+          Отправить форму
+        </button>
+      </form>
+    </section>
+  </body>
 </html>
